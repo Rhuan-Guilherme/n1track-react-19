@@ -20,7 +20,7 @@ export function SingUp() {
 
       <form className="w-full space-y-6">
         <div className="flex flex-col gap-3">
-          <Label htmlFor="name">Cadastrar</Label>
+          <Label htmlFor="name">Seu nome</Label>
           <Input
             type="text"
             id="name"
@@ -52,7 +52,7 @@ export function SingUp() {
         <p className="text-destructive font-semibold dark:text-rose-500">
           E-mail ja cadastrado!
         </p>
-        <Button className="cursor-pointer">Entrar</Button>
+        <Button className="cursor-pointer">Cadastrar</Button>
       </form>
     </div>
   );
