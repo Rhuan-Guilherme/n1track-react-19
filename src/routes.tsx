@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import { AppLayout } from "./pages/_layouts/appLayout";
 import { AuthLayout } from "./pages/_layouts/authLayout";
+import { SingIn } from "./pages/auth/sing-in";
 
 export const router = createBrowserRouter([
   {
@@ -12,7 +13,7 @@ export const router = createBrowserRouter([
     path: "/",
     element: <AuthLayout />,
     children: [
-      { path: "/sing-in", element: <h1>Sing-in</h1> },
+      { path: "/sing-in", element: <SingIn /> },
       { path: "/sing-out", element: <h1>Sing-out</h1> },
     ],
   },
