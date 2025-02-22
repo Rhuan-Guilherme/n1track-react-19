@@ -1,5 +1,7 @@
+import { Button } from './components/ui/button';
+
 function App() {
-  return <h1>hello</h1>;
+  return <Button>Teste legala qui</Button>;
 }
 
 export default App;
