@@ -3,22 +3,32 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link } from "react-router-dom";
 
-export function SingIn() {
+export function SingUp() {
   return (
     <div className="animate-slideIn font-roboto bg-muted space-y-15 rounded-2xl p-10 lg:rounded-none lg:border-none lg:bg-transparent">
       <div className="flex flex-col gap-2">
         <h1 className="font-poppins text-4xl lg:text-6xl lg:leading-15">
-          Entre em <br /> sua conta.
+          Crie <br /> sua conta.
         </h1>
         <p>
-          Ainda não tem cadastro?{" "}
-          <Link to="/sing-up" className="font-bold text-blue-500">
-            Cadastre-se
+          Ja tem cadastro?{" "}
+          <Link to="/sing-in" className="font-bold text-blue-500">
+            Acesse sua conta
           </Link>
         </p>
       </div>
 
       <form className="w-full space-y-6">
+        <div className="flex flex-col gap-3">
+          <Label htmlFor="name">Cadastrar</Label>
+          <Input
+            type="text"
+            id="name"
+            name="name"
+            required
+            className="h-10 border-zinc-300 bg-zinc-100 dark:border-zinc-600 dark:bg-zinc-900"
+          />
+        </div>
         <div className="flex flex-col gap-3">
           <Label htmlFor="email">E-mail</Label>
           <Input
@@ -40,7 +50,7 @@ export function SingIn() {
           />
         </div>
         <p className="text-destructive font-semibold dark:text-rose-500">
-          Usuário ou senha inválidos!
+          E-mail ja cadastrado!
         </p>
         <Button className="cursor-pointer">Entrar</Button>
       </form>
