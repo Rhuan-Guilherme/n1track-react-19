@@ -1,5 +1,12 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export function Home() {
   return (
@@ -48,6 +55,31 @@ export function Home() {
           name="name"
           className="border-accent-foreground/15 bg-zinc-100 dark:bg-zinc-950"
         />
+      </div>
+
+      <div className="flex w-full gap-3">
+        <div className="flex w-full flex-col gap-3">
+          <Label>Local</Label>
+          <Input
+            type="text"
+            name="name"
+            className="border-accent-foreground/15 bg-zinc-100 dark:bg-zinc-950"
+          />
+        </div>
+        <div className="flex w-full flex-col gap-3">
+          <Label>Gabinetes</Label>
+          <Select>
+            <SelectTrigger className="border-accent-foreground/15 bg-zinc-100 dark:bg-zinc-950">
+              <SelectValue placeholder="Theme" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value=" "></SelectItem>
+              <SelectItem value="light">Opção 1</SelectItem>
+              <SelectItem value="dark">Opção 2</SelectItem>
+              <SelectItem value="system">Opção 3</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
     </form>
   );
