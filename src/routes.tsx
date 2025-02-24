@@ -3,12 +3,13 @@ import { AppLayout } from "./pages/_layouts/appLayout";
 import { AuthLayout } from "./pages/_layouts/authLayout";
 import { SingIn } from "./pages/auth/sing-in";
 import { SingUp } from "./pages/auth/sing-up";
+import { Home } from "./pages/app/home";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <AppLayout />,
-    children: [{ path: "/", element: <h1>Home Page</h1> }],
+    children: [{ path: "/", element: <Home /> }],
   },
   {
     path: "/",
