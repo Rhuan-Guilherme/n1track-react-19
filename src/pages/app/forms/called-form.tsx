@@ -56,7 +56,7 @@ export function CalledForm() {
       <title>N1Track | Chamados</title>
       <form
         onSubmit={handleSubmit(handleSubmitFormTicket)}
-        className="dark:bg-accent border-accent-foreground/10 flex w-1/2 flex-col items-center justify-center gap-5 rounded-md border p-5"
+        className="dark:bg-accent border-accent-foreground/10 flex w-9/10 flex-col items-center justify-center gap-5 rounded-md border p-5 md:w-8/10 lg:w-7/10 xl:w-1/2"
       >
         <div className="flex w-full gap-3">
           <div className="flex w-full flex-col gap-3">
