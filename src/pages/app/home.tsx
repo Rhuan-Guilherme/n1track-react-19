@@ -6,7 +6,7 @@ export function Home() {
   return (
     <>
       <div className="flex items-center justify-center gap-3">
-        <ButtonSelectForm to="/chamado">
+        <ButtonSelectForm to="/">
           <ScrollText className="h-5 w-5" />
           Chamado
         </ButtonSelectForm>

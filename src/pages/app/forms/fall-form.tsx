@@ -23,24 +23,28 @@ export function FallForm() {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit(handleSubmitFormTicket)}
-      className="dark:bg-accent border-accent-foreground/10 flex w-1/2 flex-col items-center justify-center gap-5 rounded-md border p-5"
-    >
-      <div className="flex w-full gap-3">
-        <div className="flex w-full flex-col gap-3">
-          <Label>Ramal da queda</Label>
-          <Input
-            {...register("ramal")}
-            type="text"
-            className="border-accent-foreground/15 bg-zinc-100 dark:bg-zinc-950"
-          />
-        </div>
-      </div>
+    <>
+      <title>N1track | Queda de ligação</title>
 
-      <div className="flex w-full justify-start">
-        <Button type="submit">Registrar</Button>
-      </div>
-    </form>
+      <form
+        onSubmit={handleSubmit(handleSubmitFormTicket)}
+        className="dark:bg-accent border-accent-foreground/10 flex w-1/2 flex-col items-center justify-center gap-5 rounded-md border p-5"
+      >
+        <div className="flex w-full gap-3">
+          <div className="flex w-full flex-col gap-3">
+            <Label>Ramal da queda</Label>
+            <Input
+              {...register("ramal")}
+              type="text"
+              className="border-accent-foreground/15 bg-zinc-100 dark:bg-zinc-950"
+            />
+          </div>
+        </div>
+
+        <div className="flex w-full justify-start">
+          <Button type="submit">Registrar</Button>
+        </div>
+      </form>
+    </>
   );
 }

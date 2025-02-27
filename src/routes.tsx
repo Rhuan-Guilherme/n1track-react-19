@@ -18,7 +18,7 @@ export const router = createBrowserRouter([
         path: "/",
         element: <Home />,
         children: [
-          { path: "/chamado", element: <CalledForm /> },
+          { path: "/", element: <CalledForm /> },
           { path: "/queda", element: <FallForm /> },
           { path: "/transferencia", element: <TransferForm /> },
           { path: "/reiteracao", element: <ReiterationForm /> },
