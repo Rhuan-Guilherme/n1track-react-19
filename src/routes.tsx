@@ -8,6 +8,7 @@ import { CalledForm } from "./pages/app/forms/called-form";
 import { FallForm } from "./pages/app/forms/fall-form";
 import { TransferForm } from "./pages/app/forms/transfer-form";
 import { ReiterationForm } from "./pages/app/forms/reiteration-form";
+import { FormatEmail } from "./pages/app/IA/forrmat-email";
 
 export const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ export const router = createBrowserRouter([
           { path: "/transferencia", element: <TransferForm /> },
           { path: "/reiteracao", element: <ReiterationForm /> },
         ],
+      },
+      {
+        path: "/ia",
+        element: <FormatEmail />,
       },
     ],
   },
