@@ -39,7 +39,6 @@ export function CalledForm() {
       resolver: zodResolver(formSchema),
     });
 
-  const localWaatched = watch("local");
   const loginWatched = watch("login");
 
   function handleSubmitFormTicket(data: formType) {
@@ -131,7 +130,7 @@ export function CalledForm() {
             <Controller
               control={control}
               name="local"
-              render={({ field: { name, onChange, value, disabled } }) => {
+              render={({ field: { name, onChange, disabled } }) => {
                 return (
                   <Select
                     defaultValue=" "
