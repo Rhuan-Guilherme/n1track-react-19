@@ -120,7 +120,7 @@ export function CalledForm() {
             <Label>Local</Label>
             <Input
               {...register("local")}
-              value={localWaatched}
+              onChange={(e) => setValue("local", e.target.value)}
               type="text"
               className="border-accent-foreground/15 bg-zinc-100 dark:bg-zinc-950"
             />
@@ -136,8 +136,10 @@ export function CalledForm() {
                   <Select
                     defaultValue=" "
                     name={name}
-                    onValueChange={onChange}
-                    value={value}
+                    onValueChange={(selectdValue) => {
+                      onChange(selectdValue);
+                      setValue("local", selectdValue);
+                    }}
                     disabled={disabled}
                   >
                     <SelectTrigger className="border-accent-foreground/15 bg-zinc-100 dark:bg-zinc-950">
