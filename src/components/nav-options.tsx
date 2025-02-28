@@ -5,17 +5,30 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { Moon } from "lucide-react";
+import { Moon, Sun } from "lucide-react";
+
+import { useTheme } from "./theme/theme-provider";
 
 export function NavOptions() {
+  const { setTheme, theme } = useTheme();
+
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
       <SidebarGroupLabel>Option</SidebarGroupLabel>
       <SidebarMenu>
         <SidebarMenuItem>
-          <SidebarMenuButton className="cursor-pointer">
-            <Moon />
-            <span>Tema</span>
+          <SidebarMenuButton
+            onClick={() => {
+              if (theme === "light") {
+                setTheme("dark");
+              } else {
+                setTheme("light");
+              }
+            }}
+            className="cursor-pointer"
+          >
+            {theme === "light" ? <Moon /> : <Sun />}
+            Tema {theme === "light" ? "escuro" : "claro"}
           </SidebarMenuButton>
         </SidebarMenuItem>
       </SidebarMenu>
