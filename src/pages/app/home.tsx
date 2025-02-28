@@ -1,4 +1,5 @@
 import { ButtonSelectForm } from "@/components/button-select-form";
+import CardsComponent from "@/components/cards";
 import { BellRing, PhoneForwarded, PhoneOff, ScrollText } from "lucide-react";
 import { Outlet } from "react-router-dom";
 
@@ -26,6 +27,20 @@ export function Home() {
       <section className="mt-10 flex justify-center">
         <Outlet />
       </section>
+      <div className="mt-10 flex flex-wrap items-center justify-center gap-5">
+        <CardsComponent />
+        <CardsComponent />
+        <CardsComponent />
+        <CardsComponent />
+        <CardsComponent />
+        <CardsComponent />
+        <CardsComponent />
+        <CardsComponent />
+        <CardsComponent />
+        <CardsComponent />
+        <CardsComponent />
+        <CardsComponent />
+      </div>
     </>
   );
 }

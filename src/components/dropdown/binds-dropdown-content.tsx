@@ -24,11 +24,11 @@ export function BindsDropDownContent() {
           Ao criar uma bind, pode utiliza-la no formulário de informação
           utilizando \nome-da-bind
         </p>
+        <form className="my-5 flex gap-5">
+          <Input type="text" />
+          <Button>Adicionar</Button>
+        </form>
         <DialogDescription>
-          <form className="my-5 flex gap-5">
-            <Input type="text" />
-            <Button>Adicionar</Button>
-          </form>
           <Table>
             <TableHeader>
               <TableRow>

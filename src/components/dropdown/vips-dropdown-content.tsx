@@ -24,11 +24,11 @@ export function VipsDropDownContent() {
           Ao criar adicionar um usuário como VIP, todos so chamados desse
           usuário aparecerão como VIP na lista de chamados.
         </p>
+        <form className="my-5 flex gap-5">
+          <Input type="text" />
+          <Button>Adicionar</Button>
+        </form>
         <DialogDescription>
-          <form className="my-5 flex gap-5">
-            <Input type="text" />
-            <Button>Adicionar</Button>
-          </form>
           <Table>
             <TableHeader>
               <TableRow>
