@@ -9,6 +9,7 @@ import {
   SidebarContent,
   SidebarFooter,
 } from "@/components/ui/sidebar";
+import { NavSystem } from "./nav-system";
 
 const data = {
   user: {
@@ -35,6 +36,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     <Sidebar className="top-[57px] !h-[calc(100svh-57px)]" {...props}>
       <SidebarContent>
         <NavMain />
+        <NavSystem />
         <NavOptions />
       </SidebarContent>
       <SidebarFooter>
