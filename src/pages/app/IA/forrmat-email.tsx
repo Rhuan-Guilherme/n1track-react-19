@@ -30,8 +30,8 @@ export function FormatEmail() {
   }
 
   return (
-    <div className="item-center flex h-screen w-full flex-col gap-5 px-50">
-      <h1 className="font-poppins text-2xl font-semibold">
+    <div className="item-center flex h-screen w-full flex-col gap-5 px-10 xl:px-50">
+      <h1 className="font-poppins font-semibold md:text-2xl">
         Formate e-mails utilizando IA
       </h1>
       <form

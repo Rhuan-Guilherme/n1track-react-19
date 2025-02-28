@@ -9,19 +9,19 @@ export function Home() {
       <div className="flex items-center justify-center gap-3">
         <ButtonSelectForm to="/">
           <ScrollText className="h-5 w-5" />
-          Chamado
+          <span className="hidden md:inline">Chamado</span>
         </ButtonSelectForm>
         <ButtonSelectForm to="/reiteracao">
           <BellRing className="h-5 w-5" />
-          Reiteração
+          <span className="hidden md:inline">Reiteração</span>
         </ButtonSelectForm>
         <ButtonSelectForm to="/transferencia">
           <PhoneForwarded className="h-5 w-5" />
-          Transferência
+          <span className="hidden md:inline">Transferência</span>
         </ButtonSelectForm>
         <ButtonSelectForm to="/queda">
           <PhoneOff className="h-5 w-5" />
-          Queda
+          <span className="hidden md:inline">Queda</span>
         </ButtonSelectForm>
       </div>
       <section className="mt-10 flex justify-center">
