@@ -1,8 +1,5 @@
-"use client";
+import { BookOpenCheck, Cpu, Home, LayoutList, Star } from "lucide-react";
 
-import { type LucideIcon } from "lucide-react";
-
-import { Collapsible } from "@/components/ui/collapsible";
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -10,37 +7,58 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { Link } from "react-router-dom";
 
-export function NavMain({
-  items,
-}: {
-  items: {
-    title: string;
-    url: string;
-    icon: LucideIcon;
-    isActive?: boolean;
-    items?: {
-      title: string;
-      url: string;
-    }[];
-  }[];
-}) {
+export function NavMain() {
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Menu</SidebarGroupLabel>
       <SidebarMenu>
-        {items.map((item) => (
-          <Collapsible key={item.title} asChild defaultOpen={item.isActive}>
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild tooltip={item.title}>
-                <a href={item.url}>
-                  <item.icon />
-                  <span>{item.title}</span>
-                </a>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          </Collapsible>
-        ))}
+        <SidebarMenuItem>
+          <SidebarMenuButton asChild tooltip="Menu">
+            <Link to="/">
+              <Home />
+              <span>Home</span>
+            </Link>
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+        <SidebarMenuItem>
+          <SidebarMenuButton asChild tooltip="Menu">
+            <Link to="/">
+              <LayoutList />
+              <span>Listas de chamados</span>
+            </Link>
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+        <SidebarMenuItem>
+          <SidebarMenuButton asChild tooltip="Menu">
+            <Link to="/">
+              <BookOpenCheck />
+              <span>Binds</span>
+            </Link>
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+        <SidebarMenuItem>
+          <SidebarMenuButton asChild tooltip="Menu">
+            <Link to="/">
+              <Star />
+              <span>Vips</span>
+            </Link>
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+        <SidebarMenuItem>
+          <SidebarMenuButton asChild tooltip="Menu">
+            <Link to="/">
+              <Cpu />
+              <span>
+                Formatação de e-mail{" "}
+                <span className="font-robotoMono animate- animate-gradientMove h-screen w-full rounded-md bg-gradient-to-r from-[#0f172a] via-[#4f46e5] to-[#06b6d4] bg-[length:200%_200%] p-1">
+                  IA
+                </span>
+              </span>
+            </Link>
+          </SidebarMenuButton>
+        </SidebarMenuItem>
       </SidebarMenu>
     </SidebarGroup>
   );
