@@ -5,7 +5,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { Moon, Sun } from "lucide-react";
+import { AlertCircle, Moon, Sun } from "lucide-react";
 
 import { useTheme } from "./theme/theme-provider";
 
@@ -14,7 +14,7 @@ export function NavOptions() {
 
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-      <SidebarGroupLabel>Option</SidebarGroupLabel>
+      <SidebarGroupLabel>Sistema</SidebarGroupLabel>
       <SidebarMenu>
         <SidebarMenuItem>
           <SidebarMenuButton
@@ -30,6 +30,12 @@ export function NavOptions() {
             {theme === "light" ? <Moon /> : <Sun />}
             Tema {theme === "light" ? "escuro" : "claro"}
           </SidebarMenuButton>
+          <SidebarMenuItem>
+            <SidebarMenuButton>
+              <AlertCircle />
+              Chamados criticos
+            </SidebarMenuButton>
+          </SidebarMenuItem>
         </SidebarMenuItem>
       </SidebarMenu>
     </SidebarGroup>

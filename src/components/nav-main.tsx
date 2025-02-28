@@ -8,6 +8,8 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { Link } from "react-router-dom";
+import { Dialog, DialogTrigger } from "./ui/dialog";
+import { VipsDropDownContent } from "./dropdown/vips-dropdown-content";
 
 export function NavMain() {
   return (
@@ -38,14 +40,21 @@ export function NavMain() {
             </Link>
           </SidebarMenuButton>
         </SidebarMenuItem>
+
         <SidebarMenuItem>
-          <SidebarMenuButton asChild tooltip="Menu">
-            <Link to="/">
-              <Star />
-              <span>Vips</span>
-            </Link>
-          </SidebarMenuButton>
+          <Dialog>
+            <DialogTrigger asChild>
+              <SidebarMenuButton asChild tooltip="Menu">
+                <button className="cursor-pointer">
+                  <Star />
+                  <span>Vips</span>
+                </button>
+              </SidebarMenuButton>
+            </DialogTrigger>
+            <VipsDropDownContent />
+          </Dialog>
         </SidebarMenuItem>
+
         <SidebarMenuItem>
           <SidebarMenuButton asChild tooltip="Menu">
             <Link to="/ia">
