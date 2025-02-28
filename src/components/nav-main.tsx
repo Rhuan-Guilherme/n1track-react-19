@@ -1,4 +1,4 @@
-import { BookOpenCheck, Cpu, Home, LayoutList, Star } from "lucide-react";
+import { Cpu, Home, LayoutList } from "lucide-react";
 
 import {
   SidebarGroup,
@@ -8,8 +8,6 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { Link } from "react-router-dom";
-import { Dialog, DialogTrigger } from "./ui/dialog";
-import { VipsDropDownContent } from "./dropdown/vips-dropdown-content";
 
 export function NavMain() {
   return (
@@ -24,6 +22,7 @@ export function NavMain() {
             </Link>
           </SidebarMenuButton>
         </SidebarMenuItem>
+
         <SidebarMenuItem>
           <SidebarMenuButton asChild tooltip="Menu">
             <Link to="/">
@@ -31,28 +30,6 @@ export function NavMain() {
               <span>Listas de chamados</span>
             </Link>
           </SidebarMenuButton>
-        </SidebarMenuItem>
-        <SidebarMenuItem>
-          <SidebarMenuButton asChild tooltip="Menu">
-            <Link to="/">
-              <BookOpenCheck />
-              <span>Binds</span>
-            </Link>
-          </SidebarMenuButton>
-        </SidebarMenuItem>
-
-        <SidebarMenuItem>
-          <Dialog>
-            <DialogTrigger asChild>
-              <SidebarMenuButton asChild tooltip="Menu">
-                <button className="cursor-pointer">
-                  <Star />
-                  <span>Vips</span>
-                </button>
-              </SidebarMenuButton>
-            </DialogTrigger>
-            <VipsDropDownContent />
-          </Dialog>
         </SidebarMenuItem>
 
         <SidebarMenuItem>

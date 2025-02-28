@@ -20,6 +20,10 @@ export function VipsDropDownContent() {
     <DialogContent className="min-w-1/2">
       <DialogHeader>
         <DialogTitle>Cadastro de usuários VIPs</DialogTitle>
+        <p className="text-accent-foreground/70 text-sm">
+          Ao criar adicionar um usuário como VIP, todos so chamados desse
+          usuário aparecerão como VIP na lista de chamados.
+        </p>
         <DialogDescription>
           <form className="my-5 flex gap-5">
             <Input type="text" />
