@@ -1,7 +1,9 @@
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import logo from "@/assets/logo.svg";
 export function AuthLayout() {
-  return (
+  const token = localStorage.getItem("@n1track/token");
+
+  return !token ? (
     <div className="bg-background min-h-screen lg:grid lg:grid-cols-2">
       <div className="bg-muted hidden flex-col items-center justify-center gap-10 lg:flex">
         <img
@@ -25,5 +27,7 @@ export function AuthLayout() {
         <Outlet />
       </div>
     </div>
+  ) : (
+    <Navigate to="/" replace />
   );
 }
