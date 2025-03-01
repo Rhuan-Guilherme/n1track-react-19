@@ -1,5 +1,3 @@
-"use client";
-
 import { BadgeCheck, ChevronsUpDown, LogOut } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -20,14 +18,22 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { getUserApi } from "@/api/get-user";
 import { Skeleton } from "./ui/skeleton";
+import { useNavigate } from "react-router-dom";
 
 export function NavUser() {
   const { isMobile } = useSidebar();
+  const navigate = useNavigate();
 
   const { data: profile } = useQuery({
     queryKey: ["user"],
     queryFn: getUserApi,
+    staleTime: Infinity,
   });
+
+  function logout() {
+    localStorage.removeItem("@n1track/token");
+    navigate("/sing-in", { replace: true });
+  }
 
   return (
     <SidebarMenu>
@@ -101,7 +107,7 @@ export function NavUser() {
             </DropdownMenuItem>
 
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={logout}>
               <LogOut />
               Log out
             </DropdownMenuItem>
