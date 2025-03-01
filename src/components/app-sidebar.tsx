@@ -1,5 +1,4 @@
 import * as React from "react";
-import { LogOut, Moon } from "lucide-react";
 
 import { NavMain } from "@/components/nav-main";
 import { NavOptions } from "@/components/nav-options";
@@ -11,26 +10,6 @@ import {
 } from "@/components/ui/sidebar";
 import { NavSystem } from "./nav-system";
 
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-  projects: [
-    {
-      name: "Tema",
-      url: "#",
-      icon: Moon,
-    },
-    {
-      name: "Sair",
-      url: "#",
-      icon: LogOut,
-    },
-  ],
-};
-
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar className="top-[57px] !h-[calc(100svh-57px)]" {...props}>
@@ -40,7 +19,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavOptions />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser />
       </SidebarFooter>
     </Sidebar>
   );

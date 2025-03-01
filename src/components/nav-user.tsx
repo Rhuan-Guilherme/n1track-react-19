@@ -17,17 +17,17 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import { useQuery } from "@tanstack/react-query";
+import { getUserApi } from "@/api/get-user";
+import { Skeleton } from "./ui/skeleton";
 
-export function NavUser({
-  user,
-}: {
-  user: {
-    name: string;
-    email: string;
-    avatar: string;
-  };
-}) {
+export function NavUser() {
   const { isMobile } = useSidebar();
+
+  const { data: profile } = useQuery({
+    queryKey: ["user"],
+    queryFn: getUserApi,
+  });
 
   return (
     <SidebarMenu>
@@ -38,13 +38,31 @@ export function NavUser({
               size="lg"
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
-              <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
-              </Avatar>
+              {profile ? (
+                <Avatar className="h-8 w-8 rounded-lg">
+                  <AvatarImage src="" alt={profile.user.name} />
+                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                </Avatar>
+              ) : (
+                <Skeleton className="h-8 w-8" />
+              )}
+
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{user.name}</span>
-                <span className="truncate text-xs">{user.email}</span>
+                {profile ? (
+                  <>
+                    <span className="truncate font-medium">
+                      {profile.user.name}
+                    </span>
+                    <span className="truncate text-xs">
+                      {profile.user.email}
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <Skeleton className="mb-1 h-3 w-15" />
+                    <Skeleton className="h-3 w-25" />
+                  </>
+                )}
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
@@ -58,12 +76,20 @@ export function NavUser({
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user.avatar} alt={user.name} />
+                  {profile && <AvatarImage src="" alt={profile.user.name} />}
                   <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{user.name}</span>
-                  <span className="truncate text-xs">{user.email}</span>
+                  {profile && (
+                    <>
+                      <span className="truncate font-medium">
+                        {profile.user.name}
+                      </span>
+                      <span className="truncate text-xs">
+                        {profile.user.email}
+                      </span>
+                    </>
+                  )}
                 </div>
               </div>
             </DropdownMenuLabel>
