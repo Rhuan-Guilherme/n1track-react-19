@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { usePersistedForm } from "@/hooks/set-value-form-local-storage";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useForm } from "react-hook-form";
@@ -15,11 +16,20 @@ const formSchema = z.object({
 type formType = z.infer<typeof formSchema>;
 
 export function TransferForm() {
+  const { clearFormStorage, handleChange } = usePersistedForm("n1track");
+
   const { register, handleSubmit } = useForm<formType>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      ramal: localStorage.getItem("@n1track-form-ramal") || undefined,
+      destinatario:
+        localStorage.getItem("@n1track-form-destinatario") || undefined,
+      nome: localStorage.getItem("@n1track-form-nome") || undefined,
+    },
   });
 
   function handleSubmitFormTicket(data: formType) {
+    clearFormStorage();
     console.log(data);
   }
 
@@ -37,6 +47,7 @@ export function TransferForm() {
             <Input
               {...register("nome")}
               type="text"
+              onChange={handleChange}
               className="border-accent-foreground/15 bg-zinc-100 dark:bg-zinc-950"
             />
           </div>
@@ -46,6 +57,7 @@ export function TransferForm() {
             <Input
               {...register("destinatario")}
               type="text"
+              onChange={handleChange}
               className="border-accent-foreground/15 bg-zinc-100 dark:bg-zinc-950"
             />
           </div>
@@ -56,6 +68,7 @@ export function TransferForm() {
             <Input
               {...register("ramal")}
               type="text"
+              onChange={handleChange}
               className="border-accent-foreground/15 bg-zinc-100 dark:bg-zinc-950"
             />
           </div>

@@ -2,6 +2,7 @@ import { Combobox } from "@/components/combobox";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { usePersistedForm } from "@/hooks/set-value-form-local-storage";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useState } from "react";
@@ -24,20 +25,39 @@ interface User {
 type formType = z.infer<typeof formSchema>;
 
 export function ReiterationForm() {
+  const { clearFormStorage, handleChange } = usePersistedForm("n1track");
+
   const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
   const { register, handleSubmit, watch, setValue } = useForm<formType>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      nome: localStorage.getItem("@n1track-form-nome") || undefined,
+      ramal: localStorage.getItem("@n1track-form-ramal") || undefined,
+      login: localStorage.getItem("@n1track-form-login") || undefined,
+      chamado: localStorage.getItem("@n1track-form-chamado") || undefined,
+    },
   });
 
   const loginWatched = watch("login");
 
   function handleSubmitFormTicket(data: formType) {
+    clearFormStorage();
     console.log(data);
   }
 
   const handleSelectLogin = (user: User) => {
     setValue("login", user.login);
     setValue("nome", user.name);
+
+    const loginEvent = {
+      target: { name: "login", value: user.login },
+    } as React.FocusEvent<HTMLInputElement>;
+    const nomeEvent = {
+      target: { name: "nome", value: user.name },
+    } as React.FocusEvent<HTMLInputElement>;
+
+    handleChange(loginEvent);
+    handleChange(nomeEvent);
   };
 
   return (
@@ -54,6 +74,7 @@ export function ReiterationForm() {
             <Input
               {...register("nome")}
               type="text"
+              onChange={handleChange}
               className="border-accent-foreground/15 bg-zinc-100 dark:bg-zinc-950"
             />
           </div>
@@ -65,6 +86,7 @@ export function ReiterationForm() {
               type="text"
               className="border-accent-foreground/15 bg-zinc-100 dark:bg-zinc-950"
               onFocus={() => setIsInputFocused(true)}
+              onChange={handleChange}
               onBlur={() => setIsInputFocused(false)}
             />
 
@@ -83,6 +105,7 @@ export function ReiterationForm() {
             <Input
               {...register("ramal")}
               type="text"
+              onChange={handleChange}
               className="border-accent-foreground/15 bg-zinc-100 dark:bg-zinc-950"
             />
           </div>
@@ -91,6 +114,7 @@ export function ReiterationForm() {
             <Input
               {...register("chamado")}
               type="text"
+              onChange={handleChange}
               className="border-accent-foreground/15 bg-zinc-100 dark:bg-zinc-950"
             />
           </div>

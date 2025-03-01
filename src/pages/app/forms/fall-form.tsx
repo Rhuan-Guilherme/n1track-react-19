@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { usePersistedForm } from "@/hooks/set-value-form-local-storage";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -14,11 +15,17 @@ const formSchema = z.object({
 type formType = z.infer<typeof formSchema>;
 
 export function FallForm() {
+  const { clearFormStorage, handleChange } = usePersistedForm("n1track");
+
   const { register, handleSubmit } = useForm<formType>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      ramal: localStorage.getItem("@n1track-form-ramal") || undefined,
+    },
   });
 
   function handleSubmitFormTicket(data: formType) {
+    clearFormStorage();
     console.log(data);
   }
 
@@ -36,6 +43,7 @@ export function FallForm() {
             <Input
               {...register("ramal")}
               type="text"
+              onChange={handleChange}
               className="border-accent-foreground/15 bg-zinc-100 dark:bg-zinc-950"
             />
           </div>
