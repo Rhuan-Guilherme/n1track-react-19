@@ -58,6 +58,7 @@ export function CalledForm() {
 
   const { mutateAsync: createCalledApiFn, isPending } = useMutation({
     mutationFn: createCalledApi,
+
     async onSuccess(data) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       queryClient.setQueryData(["tickets"], (oldData: any) => {

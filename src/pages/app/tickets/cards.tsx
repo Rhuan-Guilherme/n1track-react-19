@@ -1,3 +1,4 @@
+import Bedge from "@/components/ui/bedge";
 import { Button } from "../../../components/ui/button";
 import {
   Card,
@@ -34,8 +35,9 @@ export default function CardsComponent({ ticket }: GetTicketResponse) {
     <Card className="max-w-72 min-w-72">
       <CardHeader>
         <CardDescription>{ticket.created_at}</CardDescription>
-        <CardTitle>
-          {(ticket.name, "-")} {ticket.ramal}
+        <CardTitle className="flex gap-2">
+          {ticket.name} - {ticket.ramal}
+          <Bedge type={ticket.type} />
         </CardTitle>
         <CardDescription>{ticket.area}</CardDescription>
       </CardHeader>
