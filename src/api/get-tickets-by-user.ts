@@ -15,6 +15,7 @@ interface GetUserResponse {
     created_at: string;
     type: "CHAMADO" | "REITERACAO" | "TRANSFERENCIA" | "QUEDA";
     vip: boolean;
+    status: "ABERTO" | "FECHADO";
     userId: string;
     userName: string;
   }[];
