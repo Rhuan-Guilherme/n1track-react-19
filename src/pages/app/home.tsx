@@ -1,9 +1,16 @@
+import { getTicketsByUser } from "@/api/get-tickets-by-user";
 import { ButtonSelectForm } from "@/components/button-select-form";
 import CardsComponent from "@/pages/app/tickets/cards";
+import { useQuery } from "@tanstack/react-query";
 import { BellRing, PhoneForwarded, PhoneOff, ScrollText } from "lucide-react";
 import { Outlet } from "react-router-dom";
 
 export function Home() {
+  const { data: tickets } = useQuery({
+    queryKey: ["tickets"],
+    queryFn: getTicketsByUser,
+  });
+
   return (
     <>
       <div className="flex items-center justify-center gap-3">
@@ -28,18 +35,10 @@ export function Home() {
         <Outlet />
       </section>
       <div className="mt-10 flex flex-wrap items-center justify-center gap-5">
-        <CardsComponent />
-        <CardsComponent />
-        <CardsComponent />
-        <CardsComponent />
-        <CardsComponent />
-        <CardsComponent />
-        <CardsComponent />
-        <CardsComponent />
-        <CardsComponent />
-        <CardsComponent />
-        <CardsComponent />
-        <CardsComponent />
+        {tickets &&
+          tickets.tickets.map((ticket) => (
+            <CardsComponent key={ticket.id} ticket={ticket} />
+          ))}
       </div>
     </>
   );

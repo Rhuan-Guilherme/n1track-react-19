@@ -9,19 +9,39 @@ import {
 } from "../../../components/ui/card";
 import DescriptionCard from "./description-card";
 
-export default function CardsComponent() {
+interface GetTicketResponse {
+  ticket: {
+    name: string;
+    id: string;
+    login: string;
+    ramal: string;
+    local: string;
+    informacao: string;
+    patrimono: string;
+    chamado: string;
+    destinatario: string;
+    area: string;
+    created_at: string;
+    type: "CHAMADO" | "REITERACAO" | "TRANSFERENCIA" | "QUEDA";
+    vip: boolean;
+    userId: string;
+    userName: string;
+  };
+}
+
+export default function CardsComponent({ ticket }: GetTicketResponse) {
   return (
     <Card className="max-w-72 min-w-72">
       <CardHeader>
-        <CardDescription>28/02/2025 às 17h</CardDescription>
-        <CardTitle>Rhuan - 3416</CardTitle>
-        <CardDescription>
-          Secretária de técnologia da informação
-        </CardDescription>
+        <CardDescription>{ticket.created_at}</CardDescription>
+        <CardTitle>
+          {(ticket.name, "-")} {ticket.ramal}
+        </CardTitle>
+        <CardDescription>{ticket.area}</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="bg-border mb-3 h-0.5 w-full"></div>
-        <DescriptionCard />
+        <DescriptionCard ticket={ticket} />
         <div className="bg-border mt-3 h-0.5 w-full"></div>
       </CardContent>
       <CardFooter className="flex items-center justify-center gap-2">
