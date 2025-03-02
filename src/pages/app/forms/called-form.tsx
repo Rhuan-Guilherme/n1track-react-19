@@ -55,7 +55,7 @@ export function CalledForm() {
 
   const loginWatched = watch("login");
 
-  const { mutateAsync: createCalledApiFn } = useMutation({
+  const { mutateAsync: createCalledApiFn, isPending } = useMutation({
     mutationFn: createCalledApi,
   });
 
@@ -196,8 +196,8 @@ export function CalledForm() {
           </div>
         </div>
         <div className="flex w-full justify-start">
-          <Button type="submit" className="cursor-pointer">
-            Registrar
+          <Button disabled={isPending} className="cursor-pointer" type="submit">
+            {isPending ? "Aguarde..." : "Registrar"}
           </Button>
         </div>
       </form>

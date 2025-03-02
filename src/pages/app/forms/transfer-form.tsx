@@ -30,7 +30,7 @@ export function TransferForm() {
     },
   });
 
-  const { mutateAsync: createTransferApiFn } = useMutation({
+  const { mutateAsync: createTransferApiFn, isPending } = useMutation({
     mutationFn: createTransferApi,
   });
 
@@ -86,7 +86,9 @@ export function TransferForm() {
         </div>
 
         <div className="flex w-full justify-start">
-          <Button type="submit">Registrar</Button>
+          <Button disabled={isPending} className="cursor-pointer" type="submit">
+            {isPending ? "Aguarde..." : "Registrar"}
+          </Button>
         </div>
       </form>
     </>

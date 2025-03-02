@@ -26,7 +26,7 @@ export function FallForm() {
     },
   });
 
-  const { mutateAsync: createFallApiFn } = useMutation({
+  const { mutateAsync: createFallApiFn, isPending } = useMutation({
     mutationFn: createFallApi,
   });
 
@@ -61,7 +61,9 @@ export function FallForm() {
         </div>
 
         <div className="flex w-full justify-start">
-          <Button type="submit">Registrar</Button>
+          <Button disabled={isPending} className="cursor-pointer" type="submit">
+            {isPending ? "Aguarde..." : "Registrar"}
+          </Button>
         </div>
       </form>
     </>
