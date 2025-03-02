@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const formSchema = z.object({
-  nome: z.string(),
+  name: z.string(),
   login: z.string(),
   ramal: z.string(),
   chamado: z.string(),
@@ -31,7 +31,7 @@ export function ReiterationForm() {
   const { register, handleSubmit, watch, setValue } = useForm<formType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      nome: localStorage.getItem("@n1track-form-nome") || undefined,
+      name: localStorage.getItem("@n1track-form-nome") || undefined,
       ramal: localStorage.getItem("@n1track-form-ramal") || undefined,
       login: localStorage.getItem("@n1track-form-login") || undefined,
       chamado: localStorage.getItem("@n1track-form-chamado") || undefined,
@@ -47,13 +47,13 @@ export function ReiterationForm() {
 
   const handleSelectLogin = (user: User) => {
     setValue("login", user.login);
-    setValue("nome", user.name);
+    setValue("name", user.name);
 
     const loginEvent = {
       target: { name: "login", value: user.login },
     } as React.FocusEvent<HTMLInputElement>;
     const nomeEvent = {
-      target: { name: "nome", value: user.name },
+      target: { name: "name", value: user.name },
     } as React.FocusEvent<HTMLInputElement>;
 
     handleChange(loginEvent);
@@ -72,7 +72,7 @@ export function ReiterationForm() {
           <div className="flex w-full flex-col gap-3">
             <Label>Nome</Label>
             <Input
-              {...register("nome")}
+              {...register("name")}
               type="text"
               onChange={handleChange}
               className="border-accent-foreground/15 bg-zinc-100 dark:bg-zinc-950"

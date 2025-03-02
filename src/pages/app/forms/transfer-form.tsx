@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const formSchema = z.object({
-  nome: z.string(),
+  name: z.string(),
   ramal: z.string(),
   destinatario: z.string(),
 });
@@ -24,7 +24,7 @@ export function TransferForm() {
       ramal: localStorage.getItem("@n1track-form-ramal") || undefined,
       destinatario:
         localStorage.getItem("@n1track-form-destinatario") || undefined,
-      nome: localStorage.getItem("@n1track-form-nome") || undefined,
+      name: localStorage.getItem("@n1track-form-nome") || undefined,
     },
   });
 
@@ -45,7 +45,7 @@ export function TransferForm() {
           <div className="flex w-full flex-col gap-3">
             <Label>Nome</Label>
             <Input
-              {...register("nome")}
+              {...register("name")}
               type="text"
               onChange={handleChange}
               className="border-accent-foreground/15 bg-zinc-100 dark:bg-zinc-950"
