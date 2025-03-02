@@ -1,9 +1,11 @@
+import { createFallApi } from "@/api/create-fall-api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { usePersistedForm } from "@/hooks/set-value-form-local-storage";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
 
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -17,16 +19,25 @@ type formType = z.infer<typeof formSchema>;
 export function FallForm() {
   const { clearFormStorage, handleChange } = usePersistedForm("n1track");
 
-  const { register, handleSubmit } = useForm<formType>({
+  const { register, handleSubmit, reset } = useForm<formType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       ramal: localStorage.getItem("@n1track-form-ramal") || undefined,
     },
   });
 
-  function handleSubmitFormTicket(data: formType) {
-    clearFormStorage();
-    console.log(data);
+  const { mutateAsync: createFallApiFn } = useMutation({
+    mutationFn: createFallApi,
+  });
+
+  async function handleSubmitFormTicket(data: formType) {
+    try {
+      await createFallApiFn(data);
+      clearFormStorage();
+      reset();
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (

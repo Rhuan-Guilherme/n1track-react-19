@@ -1,9 +1,11 @@
+import { createReiterationApi } from "@/api/create-reiteration-api";
 import { Combobox } from "@/components/combobox";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { usePersistedForm } from "@/hooks/set-value-form-local-storage";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -28,7 +30,7 @@ export function ReiterationForm() {
   const { clearFormStorage, handleChange } = usePersistedForm("n1track");
 
   const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
-  const { register, handleSubmit, watch, setValue } = useForm<formType>({
+  const { register, handleSubmit, watch, setValue, reset } = useForm<formType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: localStorage.getItem("@n1track-form-nome") || undefined,
@@ -40,9 +42,18 @@ export function ReiterationForm() {
 
   const loginWatched = watch("login");
 
-  function handleSubmitFormTicket(data: formType) {
-    clearFormStorage();
-    console.log(data);
+  const { mutateAsync: createReiterationApiFn } = useMutation({
+    mutationFn: createReiterationApi,
+  });
+
+  async function handleSubmitFormTicket(data: formType) {
+    try {
+      await createReiterationApiFn(data);
+      clearFormStorage();
+      reset();
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   const handleSelectLogin = (user: User) => {
@@ -86,7 +97,6 @@ export function ReiterationForm() {
               type="text"
               className="border-accent-foreground/15 bg-zinc-100 dark:bg-zinc-950"
               onFocus={() => setIsInputFocused(true)}
-              onChange={handleChange}
               onBlur={() => setIsInputFocused(false)}
             />
 
