@@ -1,4 +1,4 @@
-import { Button } from "./ui/button";
+import { Button } from "../../../components/ui/button";
 import {
   Card,
   CardHeader,
@@ -6,7 +6,8 @@ import {
   CardDescription,
   CardContent,
   CardFooter,
-} from "./ui/card";
+} from "../../../components/ui/card";
+import DescriptionCard from "./description-card";
 
 export default function CardsComponent() {
   return (
@@ -20,18 +21,7 @@ export default function CardsComponent() {
       </CardHeader>
       <CardContent>
         <div className="bg-border mb-3 h-0.5 w-full"></div>
-        <div className="flex flex-col gap-2 text-sm leading-6">
-          <p>
-            Prezados, Sr(a). Rhuan entrou em contato informando que sua máquina
-            não está ligando e solicita um técnico no local para verificar o
-            problema.
-          </p>
-          <p>Nome: Rhuan Guilherme de sousa Silva</p>
-          <p>Login: rhuan.g.silva</p>
-          <p>Ramal: 3685</p>
-          <p>Local: Anexo 2A / 2° andar / Sala 255</p>
-          <p>Patrimônio: ETU103416</p>
-        </div>
+        <DescriptionCard />
         <div className="bg-border mt-3 h-0.5 w-full"></div>
       </CardContent>
       <CardFooter className="flex items-center justify-center gap-2">

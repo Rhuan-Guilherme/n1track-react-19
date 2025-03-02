@@ -1,5 +1,5 @@
 import { ButtonSelectForm } from "@/components/button-select-form";
-import CardsComponent from "@/components/cards";
+import CardsComponent from "@/pages/app/tickets/cards";
 import { BellRing, PhoneForwarded, PhoneOff, ScrollText } from "lucide-react";
 import { Outlet } from "react-router-dom";
 
