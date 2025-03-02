@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { usePersistedForm } from "@/hooks/set-value-form-local-storage";
+import { queryClient } from "@/lib/query-cleint";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
@@ -28,6 +29,17 @@ export function FallForm() {
 
   const { mutateAsync: createFallApiFn, isPending } = useMutation({
     mutationFn: createFallApi,
+    async onSuccess(data) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      queryClient.setQueryData(["tickets"], (oldData: any) => {
+        if (!oldData) return { tickets: [data.ticket] };
+
+        return {
+          ...oldData,
+          tickets: [data.ticket, ...oldData.tickets],
+        };
+      });
+    },
   });
 
   async function handleSubmitFormTicket(data: formType) {
