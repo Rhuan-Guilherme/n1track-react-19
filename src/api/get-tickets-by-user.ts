@@ -1,6 +1,6 @@
 import { api } from "@/lib/axios";
 
-interface GetUserResponse {
+export interface GetTicketsResponse {
   tickets: {
     name: string;
     id: string;
@@ -24,5 +24,5 @@ interface GetUserResponse {
 export async function getTicketsByUser() {
   const response = await api.get("/tickets");
 
-  return response.data as GetUserResponse;
+  return response.data as GetTicketsResponse;
 }
