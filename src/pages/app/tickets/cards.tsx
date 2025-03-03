@@ -20,6 +20,9 @@ import { format, parseISO } from "date-fns";
 import { toZonedTime } from "date-fns-tz";
 import { ptBR } from "date-fns/locale";
 import { deleteTicket } from "@/api/delete-ticket";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { UpdateTicketContent } from "@/components/dropdown/update-tickets-content";
+import { useState } from "react";
 
 interface GetTicketResponse {
   ticket: {
@@ -43,6 +46,7 @@ interface GetTicketResponse {
 }
 
 export default function CardsComponent({ ticket }: GetTicketResponse) {
+  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
   const isoDate = ticket.created_at;
   const timeZone = "America/sao_Paulo";
 
@@ -119,9 +123,18 @@ export default function CardsComponent({ ticket }: GetTicketResponse) {
       </CardContent>
       {ticket.status === "ABERTO" && (
         <CardFooter className="flex items-center justify-center gap-2">
-          <Button className="flex-1 cursor-pointer" variant="secondary">
-            editar
-          </Button>
+          <Dialog open={isOpenModal} onOpenChange={setIsOpenModal}>
+            <DialogTrigger asChild>
+              <Button className="flex-1 cursor-pointer" variant="secondary">
+                editar
+              </Button>
+            </DialogTrigger>
+            <UpdateTicketContent
+              ticket={ticket}
+              onClose={() => setIsOpenModal(false)}
+            />
+          </Dialog>
+
           <Button
             onClick={handleCopy}
             className="flex-1 cursor-pointer"
