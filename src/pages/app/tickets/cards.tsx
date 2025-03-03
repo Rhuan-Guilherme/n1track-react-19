@@ -9,7 +9,7 @@ import {
   CardFooter,
 } from "../../../components/ui/card";
 import DescriptionCard from "./description-card";
-import { Check } from "lucide-react";
+import { Check, X } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import { statusTicketClose } from "@/api/status-ticket-close";
 import { queryClient } from "@/lib/query-cleint";
@@ -20,6 +20,7 @@ import { toast } from "sonner";
 import { format, parseISO } from "date-fns";
 import { toZonedTime } from "date-fns-tz";
 import { ptBR } from "date-fns/locale";
+import { deleteTicket } from "@/api/delete-ticket";
 
 interface GetTicketResponse {
   ticket: {
@@ -90,6 +91,26 @@ export default function CardsComponent({ ticket }: GetTicketResponse) {
     },
   });
 
+  const { mutateAsync: deleteTicketFn } = useMutation({
+    mutationFn: deleteTicket,
+    async onSuccess(_, id) {
+      const ticketsListCached = queryClient.getQueriesData<GetTicketsResponse>({
+        queryKey: ["tickets"],
+      });
+
+      ticketsListCached.forEach(([cachedKey, cachedData]) => {
+        if (!cachedData) {
+          return;
+        }
+
+        queryClient.setQueryData<GetTicketsResponse>(cachedKey, {
+          ...cachedData,
+          tickets: cachedData.tickets.filter((ticket) => ticket.id !== id),
+        });
+      });
+    },
+  });
+
   function handleCopy() {
     const description = document.getElementById(`desc-${ticket.id}`)?.innerText;
     if (description) {
@@ -111,6 +132,15 @@ export default function CardsComponent({ ticket }: GetTicketResponse) {
             className="absolute -top-2.5 -right-2.5 cursor-pointer rounded-sm bg-emerald-700 p-0.5 transition-all hover:bg-rose-500"
           >
             <Check className="h-5 w-5" />
+          </button>
+        )}
+
+        {ticket.status === "ABERTO" && (
+          <button
+            onClick={() => deleteTicketFn(ticket.id)}
+            className="border-border bg-accent-foreground/10 absolute top-2.5 right-2.5 cursor-pointer rounded-sm border p-0.5 transition-all hover:bg-rose-500"
+          >
+            <X className="h-5 w-5" />
           </button>
         )}
 
