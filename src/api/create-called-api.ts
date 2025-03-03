@@ -7,6 +7,8 @@ interface createCalledApiRequest {
   patrimono: string;
   informacao: string;
   local: string;
+  area: string;
+  cargo: string;
 }
 
 export async function createCalledApi(body: createCalledApiRequest) {

@@ -4,18 +4,42 @@ import { useEffect, useRef, useState } from "react";
 
 interface User {
   id: number;
-  login: string;
   name: string;
+  login: string;
+  cargo: string;
+  area: string;
 }
 
 const usersMoc = [
-  { id: 1, login: "rhuan.g.silva", name: "Rhuan" },
-  { id: 2, login: "felipe.v.souza", name: "Felipe" },
-  { id: 3, login: "lucas.g.alves", name: "Lucas" },
-  { id: 4, login: "joao.v.alves", name: "João" },
-  { id: 5, login: "ana.v.souza", name: "Ana" },
-  { id: 6, login: "maria.r.silva", name: "Maria" },
-  { id: 7, login: "carlos.m.alves", name: "Carlos" },
+  {
+    id: 1,
+    name: "Rhuan",
+    login: "rhuan.g.silva",
+    cargo: "Analista",
+    area: "TI",
+  },
+  {
+    id: 2,
+    name: "Felipe",
+    login: "felipe.v.souza",
+    cargo: "Desenvolvedor",
+    area: "TI",
+  },
+  {
+    id: 3,
+    name: "Lucas",
+    login: "lucas.g.alves",
+    cargo: "Analista",
+    area: "TI",
+  },
+  {
+    id: 4,
+    name: "João",
+    login: "joao.v.alves",
+    cargo: "Desenvolvedor",
+    area: "TI",
+  },
+  { id: 5, name: "Ana", login: "ana.v.souza", cargo: "Gerente", area: "TI" },
 ];
 
 interface ComboboxProps {

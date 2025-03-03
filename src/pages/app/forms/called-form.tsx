@@ -32,18 +32,22 @@ interface User {
   id: number;
   login: string;
   name: string;
+  area: string;
+  cargo: string;
 }
 
 type formType = z.infer<typeof formSchema>;
 
 export function CalledForm() {
+  const [area, setArea] = useState("");
+  const [cargo, setCargo] = useState("");
   const { clearFormStorage, handleChange } = usePersistedForm("n1track");
   const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
   const { register, handleSubmit, control, watch, setValue, reset } =
     useForm<formType>({
       resolver: zodResolver(formSchema),
       defaultValues: {
-        name: localStorage.getItem("@n1track-form-nome") || undefined,
+        name: localStorage.getItem("@n1track-form-name") || undefined,
         ramal: localStorage.getItem("@n1track-form-ramal") || undefined,
         login: localStorage.getItem("@n1track-form-login") || undefined,
         patrimono: localStorage.getItem("@n1track-form-patrimono") || undefined,
@@ -73,7 +77,7 @@ export function CalledForm() {
 
   async function handleSubmitFormTicket(data: formType) {
     try {
-      await createCalledApiFn(data);
+      await createCalledApiFn({ ...data, area, cargo });
       clearFormStorage();
       reset();
     } catch (error) {
@@ -82,8 +86,12 @@ export function CalledForm() {
   }
 
   const handleSelectLogin = (user: User) => {
+    console.log(user);
+
     setValue("login", user.login);
     setValue("name", user.name);
+    setCargo(user.cargo);
+    setArea(user.area);
 
     const loginEvent = {
       target: { name: "login", value: user.login },
@@ -101,8 +109,16 @@ export function CalledForm() {
       <title>N1Track | Chamados</title>
       <form
         onSubmit={handleSubmit(handleSubmitFormTicket)}
-        className="dark:bg-accent border-accent-foreground/10 flex w-9/10 flex-col items-center justify-center gap-5 rounded-md border p-5 md:w-8/10 lg:w-7/10 xl:w-1/2"
+        className="dark:bg-accent border-accent-foreground/10 relative flex w-9/10 flex-col items-center justify-center gap-5 rounded-md border p-5 md:w-8/10 lg:w-7/10 xl:w-1/2"
       >
+        {loginWatched && loginWatched.length > 3 && (
+          <>
+            <div className="bg-foreground/10 absolute -top-9 flex w-full gap-1.5 rounded-sm border p-1 text-sm">
+              <div className="">{area}</div>-<div className="">{cargo}</div>
+            </div>
+          </>
+        )}
+
         <div className="flex w-full gap-3">
           <div className="flex w-full flex-col gap-3">
             <Label>Nome</Label>
@@ -121,6 +137,7 @@ export function CalledForm() {
               type="text"
               className="border-accent-foreground/15 bg-zinc-100 dark:bg-zinc-950"
               onFocus={() => setIsInputFocused(true)}
+              onInput={handleChange}
               onBlur={() => setIsInputFocused(false)}
             />
 
