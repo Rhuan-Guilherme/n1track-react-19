@@ -23,7 +23,7 @@ const formSchema = z.object({
   name: z.string(),
   login: z.string(),
   ramal: z.string(),
-  patrimonio: z.string(),
+  patrimono: z.string(),
   informacao: z.string(),
   local: z.string(),
 });
@@ -46,8 +46,7 @@ export function CalledForm() {
         name: localStorage.getItem("@n1track-form-nome") || undefined,
         ramal: localStorage.getItem("@n1track-form-ramal") || undefined,
         login: localStorage.getItem("@n1track-form-login") || undefined,
-        patrimonio:
-          localStorage.getItem("@n1track-form-patrimonio") || undefined,
+        patrimono: localStorage.getItem("@n1track-form-patrimono") || undefined,
         informacao:
           localStorage.getItem("@n1track-form-informacao") || undefined,
         local: localStorage.getItem("@n1track-form-local") || undefined,
@@ -147,7 +146,7 @@ export function CalledForm() {
           <div className="flex w-full flex-col gap-3">
             <Label>Patrimônio</Label>
             <Input
-              {...register("patrimonio")}
+              {...register("patrimono")}
               type="text"
               onChange={handleChange}
               className="border-accent-foreground/15 bg-zinc-100 dark:bg-zinc-950"

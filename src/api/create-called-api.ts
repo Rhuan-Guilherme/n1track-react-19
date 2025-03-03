@@ -4,7 +4,7 @@ interface createCalledApiRequest {
   name: string;
   login: string;
   ramal: string;
-  patrimonio: string;
+  patrimono: string;
   informacao: string;
   local: string;
 }

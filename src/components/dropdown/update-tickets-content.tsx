@@ -37,7 +37,7 @@ export function UpdateTicketContent({
       name: ticket.name,
       login: ticket.login,
       ramal: ticket.ramal,
-      patrimonio: ticket.patrimono,
+      patrimono: ticket.patrimono,
       informacao: ticket.informacao,
       local: ticket.local,
     },
@@ -83,7 +83,7 @@ export function UpdateTicketContent({
             </div>
             <div className="w-full">
               <Label htmlFor="patrimonio">Patrimônio</Label>
-              <Input type="text" id="patrimonio" {...register("patrimonio")} />
+              <Input type="text" id="patrimonio" {...register("patrimono")} />
             </div>
           </div>
           <div className="flex gap-2">
