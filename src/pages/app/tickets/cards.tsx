@@ -17,6 +17,9 @@ import { GetTicketsResponse } from "@/api/get-tickets-by-user";
 import { statusTicketOpen } from "@/api/status-ticket-open";
 import clipboardCopy from "clipboard-copy";
 import { toast } from "sonner";
+import { format, parseISO } from "date-fns";
+import { toZonedTime } from "date-fns-tz";
+import { ptBR } from "date-fns/locale";
 
 interface GetTicketResponse {
   ticket: {
@@ -40,6 +43,14 @@ interface GetTicketResponse {
 }
 
 export default function CardsComponent({ ticket }: GetTicketResponse) {
+  const isoDate = ticket.created_at;
+  const timeZone = "America/sao_Paulo";
+
+  const zonedDate = toZonedTime(parseISO(isoDate), timeZone);
+  const formattedDate = format(zonedDate, "d/M/yyyy 'às' HH:mm", {
+    locale: ptBR,
+  });
+
   function updateStatusTicket(id: string, status: "ABERTO" | "FECHADO") {
     const ticketsListCached = queryClient.getQueriesData<GetTicketsResponse>({
       queryKey: ["tickets"],
@@ -103,7 +114,7 @@ export default function CardsComponent({ ticket }: GetTicketResponse) {
           </button>
         )}
 
-        <CardDescription>{ticket.created_at}</CardDescription>
+        <CardDescription>{formattedDate}</CardDescription>
         <CardTitle className="flex gap-2">
           {ticket.name} - {ticket.ramal}
           <Bedge status={ticket.status} type={ticket.type} />
