@@ -75,7 +75,7 @@ export function TransferForm() {
             />
           </div>
           <div className="relative flex w-full flex-col gap-3">
-            <Label>Login</Label>
+            <Label>Destinatário</Label>
 
             <Input
               {...register("destinatario")}
