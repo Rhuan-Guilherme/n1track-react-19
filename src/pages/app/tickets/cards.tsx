@@ -12,8 +12,7 @@ import DescriptionCard from "./description-card";
 import { Check, X } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import { statusTicketClose } from "@/api/status-ticket-close";
-import { queryClient } from "@/lib/query-cleint";
-import { GetTicketsResponse } from "@/api/get-tickets-by-user";
+import { deleteItem, updateStatus } from "@/lib/query-cleint";
 import { statusTicketOpen } from "@/api/status-ticket-open";
 import clipboardCopy from "clipboard-copy";
 import { toast } from "sonner";
@@ -52,62 +51,24 @@ export default function CardsComponent({ ticket }: GetTicketResponse) {
     locale: ptBR,
   });
 
-  function updateStatusTicket(id: string, status: "ABERTO" | "FECHADO") {
-    const ticketsListCached = queryClient.getQueriesData<GetTicketsResponse>({
-      queryKey: ["tickets"],
-    });
-
-    ticketsListCached.forEach(([cachedKey, cachedData]) => {
-      if (!cachedData) {
-        return;
-      }
-
-      queryClient.setQueryData<GetTicketsResponse>(cachedKey, {
-        ...cachedData,
-        tickets: cachedData.tickets.map((ticket) => {
-          if (ticket.id === id) {
-            return {
-              ...ticket,
-              status,
-            };
-          }
-          return ticket;
-        }),
-      });
-    });
-  }
-
   const { mutateAsync: statusTicketCloseFn } = useMutation({
     mutationFn: statusTicketClose,
     async onSuccess(_, id) {
-      updateStatusTicket(id, "FECHADO");
+      updateStatus(id, "FECHADO");
     },
   });
 
   const { mutateAsync: statusTicketOpenFn } = useMutation({
     mutationFn: statusTicketOpen,
     async onSuccess(_, id) {
-      updateStatusTicket(id, "ABERTO");
+      updateStatus(id, "ABERTO");
     },
   });
 
   const { mutateAsync: deleteTicketFn } = useMutation({
     mutationFn: deleteTicket,
     async onSuccess(_, id) {
-      const ticketsListCached = queryClient.getQueriesData<GetTicketsResponse>({
-        queryKey: ["tickets"],
-      });
-
-      ticketsListCached.forEach(([cachedKey, cachedData]) => {
-        if (!cachedData) {
-          return;
-        }
-
-        queryClient.setQueryData<GetTicketsResponse>(cachedKey, {
-          ...cachedData,
-          tickets: cachedData.tickets.filter((ticket) => ticket.id !== id),
-        });
-      });
+      deleteItem(id);
     },
   });
 
