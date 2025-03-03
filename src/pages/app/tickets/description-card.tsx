@@ -1,4 +1,5 @@
 interface GetTicketResponse {
+  id: string;
   ticket: {
     name: string;
     id: string;
@@ -18,9 +19,9 @@ interface GetTicketResponse {
   };
 }
 
-export default function DescriptionCard({ ticket }: GetTicketResponse) {
+export default function DescriptionCard({ ticket, id }: GetTicketResponse) {
   return (
-    <div className="flex flex-col gap-2 text-sm leading-6">
+    <div className="flex flex-col gap-2 text-sm leading-6" id={id}>
       {ticket.type === "CHAMADO" && (
         <>
           <p>

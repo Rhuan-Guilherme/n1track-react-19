@@ -15,6 +15,8 @@ import { statusTicketClose } from "@/api/status-ticket-close";
 import { queryClient } from "@/lib/query-cleint";
 import { GetTicketsResponse } from "@/api/get-tickets-by-user";
 import { statusTicketOpen } from "@/api/status-ticket-open";
+import clipboardCopy from "clipboard-copy";
+import { toast } from "sonner";
 
 interface GetTicketResponse {
   ticket: {
@@ -77,6 +79,16 @@ export default function CardsComponent({ ticket }: GetTicketResponse) {
     },
   });
 
+  function handleCopy() {
+    const description = document.getElementById(`desc-${ticket.id}`)?.innerText;
+    if (description) {
+      clipboardCopy(description);
+      toast.success("Texto copiado para a área de transferência!");
+    } else {
+      toast.error("Erro ao copiar texto.");
+    }
+  }
+
   return (
     <Card
       className={`relative max-w-72 min-w-72 ${ticket.status === "FECHADO" && "border-2 border-emerald-700 opacity-40 dark:border-emerald-500"}`}
@@ -100,7 +112,7 @@ export default function CardsComponent({ ticket }: GetTicketResponse) {
       </CardHeader>
       <CardContent>
         <div className="bg-border mb-3 h-0.5 w-full"></div>
-        <DescriptionCard ticket={ticket} />
+        <DescriptionCard id={`desc-${ticket.id}`} ticket={ticket} />
         <div className="bg-border mt-3 h-0.5 w-full"></div>
       </CardContent>
       {ticket.status === "ABERTO" && (
@@ -108,7 +120,11 @@ export default function CardsComponent({ ticket }: GetTicketResponse) {
           <Button className="flex-1 cursor-pointer" variant="secondary">
             editar
           </Button>
-          <Button className="flex-1 cursor-pointer" variant="secondary">
+          <Button
+            onClick={handleCopy}
+            className="flex-1 cursor-pointer"
+            variant="secondary"
+          >
             copiar
           </Button>
           <Button
