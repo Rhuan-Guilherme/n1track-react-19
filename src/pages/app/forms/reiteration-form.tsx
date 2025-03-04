@@ -3,6 +3,12 @@ import { Combobox } from "@/components/combobox";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { usePersistedForm } from "@/hooks/set-value-form-local-storage";
 import { queryClient } from "@/lib/query-cleint";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -23,18 +29,22 @@ interface User {
   id: number;
   login: string;
   name: string;
+  cargo: string;
+  area: string;
 }
 
 type formType = z.infer<typeof formSchema>;
 
 export function ReiterationForm() {
+  const [area, setArea] = useState("");
+  const [cargo, setCargo] = useState("");
   const { clearFormStorage, handleChange } = usePersistedForm("n1track");
 
   const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
   const { register, handleSubmit, watch, setValue, reset } = useForm<formType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: localStorage.getItem("@n1track-form-nome") || undefined,
+      name: localStorage.getItem("@n1track-form-name") || undefined,
       ramal: localStorage.getItem("@n1track-form-ramal") || undefined,
       login: localStorage.getItem("@n1track-form-login") || undefined,
       chamado: localStorage.getItem("@n1track-form-chamado") || undefined,
@@ -60,7 +70,7 @@ export function ReiterationForm() {
 
   async function handleSubmitFormTicket(data: formType) {
     try {
-      await createReiterationApiFn(data);
+      await createReiterationApiFn({ ...data, area, cargo });
       clearFormStorage();
       reset();
     } catch (error) {
@@ -71,6 +81,8 @@ export function ReiterationForm() {
   const handleSelectLogin = (user: User) => {
     setValue("login", user.login);
     setValue("name", user.name);
+    setCargo(user.cargo);
+    setArea(user.area);
 
     const loginEvent = {
       target: { name: "login", value: user.login },
@@ -89,8 +101,22 @@ export function ReiterationForm() {
 
       <form
         onSubmit={handleSubmit(handleSubmitFormTicket)}
-        className="dark:bg-accent border-accent-foreground/10 flex flex-col items-center justify-center gap-5 rounded-md border p-5 md:w-8/10 lg:w-7/10 xl:w-1/2"
+        className="dark:bg-accent border-accent-foreground/10 relative flex flex-col items-center justify-center gap-5 rounded-md border p-5 md:w-8/10 lg:w-7/10 xl:w-1/2"
       >
+        {loginWatched && loginWatched.length > 2 && area && (
+          <>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger className="text-foreground font-poppins absolute top-4 right-6 z-10 flex gap-1.5 rounded-sm border border-indigo-600 bg-indigo-400/30 px-3 text-sm">
+                  <div className="">{cargo}</div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <div className="font-poppins">{area}</div>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </>
+        )}
         <div className="flex w-full gap-3">
           <div className="flex w-full flex-col gap-3">
             <Label>Nome</Label>

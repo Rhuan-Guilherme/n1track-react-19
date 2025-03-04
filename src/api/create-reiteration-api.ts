@@ -5,6 +5,8 @@ interface createReiterationApiRequest {
   login: string;
   ramal: string;
   chamado: string;
+  area: string;
+  cargo: string;
 }
 
 export async function createReiterationApi(body: createReiterationApiRequest) {
