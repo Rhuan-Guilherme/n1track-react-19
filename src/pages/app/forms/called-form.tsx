@@ -1,4 +1,5 @@
 import { createCalledApi } from "@/api/create-called-api";
+import { formatTextApi } from "@/api/format-text-api";
 import { Combobox } from "@/components/combobox";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -20,10 +21,11 @@ import { usePersistedForm } from "@/hooks/set-value-form-local-storage";
 import { queryClient } from "@/lib/query-cleint";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import { Star } from "lucide-react";
+import { Brain, Star } from "lucide-react";
 
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 const formSchema = z.object({
@@ -46,6 +48,15 @@ interface User {
 
 type formType = z.infer<typeof formSchema>;
 
+interface FormatEmailBody {
+  text: string;
+}
+
+interface FormatEmailResponse {
+  message: string;
+  response: string;
+}
+
 export function CalledForm() {
   const [area, setArea] = useState("");
   const [cargo, setCargo] = useState("");
@@ -67,6 +78,7 @@ export function CalledForm() {
     });
 
   const loginWatched = watch("login");
+  const infoWatched = watch("informacao");
 
   const { mutateAsync: createCalledApiFn, isPending } = useMutation({
     mutationFn: createCalledApi,
@@ -113,6 +125,20 @@ export function CalledForm() {
     handleChange(loginEvent);
     handleChange(nomeEvent);
   };
+
+  const { isPending: pedingFormat, mutateAsync: formatTextApiFn } = useMutation(
+    {
+      mutationFn: formatTextApi,
+    },
+  );
+
+  async function handleText({ text }: FormatEmailBody) {
+    const { message, response } = (await formatTextApiFn(
+      text,
+    )) as FormatEmailResponse;
+    setValue("informacao", response);
+    toast(message);
+  }
 
   return (
     <>
@@ -206,14 +232,42 @@ export function CalledForm() {
           </div>
         </div>
 
-        <div className="w-full">
-          <Label>Informação</Label>
-          <Input
-            {...register("informacao")}
-            type="text"
-            onChange={handleChange}
-            className="border-accent-foreground/15 bg-zinc-100 dark:bg-zinc-950"
-          />
+        <div className="relative flex w-full">
+          <div className="w-full">
+            {" "}
+            <Label>Informação</Label>
+            <Input
+              {...register("informacao")}
+              type="text"
+              onInputCapture={handleChange}
+              className="border-accent-foreground/15 bg-zinc-100 dark:bg-zinc-950"
+            />
+          </div>
+
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                {pedingFormat ? (
+                  <div className="absolute top-[31px] right-2 aspect-square h-4 w-4 animate-spin rounded-full bg-gradient-to-bl from-pink-400 via-purple-400 to-indigo-600 p-1 drop-shadow-2xl md:h-5 md:w-5">
+                    <div className="background-blur-md h-full w-full rounded-full bg-slate-100 dark:bg-zinc-900"></div>
+                  </div>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => handleText({ text: infoWatched })}
+                    className="absolute top-[27px] right-1 cursor-pointer p-1"
+                  >
+                    <Brain className="h-5 w-5" />
+                  </button>
+                )}
+              </TooltipTrigger>
+              <TooltipContent>
+                <div className="font-poppins font-semibold">
+                  Clique e corrija seu texto com IA
+                </div>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
 
         <div className="flex w-full gap-3">
