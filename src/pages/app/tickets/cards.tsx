@@ -103,15 +103,15 @@ export default function CardsComponent({ ticket }: GetTicketResponse) {
         {ticket.status === "ABERTO" && (
           <button
             onClick={() => deleteTicketFn(ticket.id)}
-            className="border-border bg-accent-foreground/10 absolute top-2.5 right-2.5 cursor-pointer rounded-sm border p-0.5 transition-all hover:bg-rose-500"
+            className="border-border bg-accent-foreground/10 top- absolute right-1.5 cursor-pointer rounded-sm border p-0.5 transition-all hover:bg-rose-500"
           >
-            <X className="h-5 w-5" />
+            <X className="h-4 w-4" />
           </button>
         )}
 
         <CardDescription>{formattedDate}</CardDescription>
-        <CardTitle className="flex gap-2">
-          {ticket.name.split(" ")[0]} - {ticket.ramal}
+        <CardTitle className="mt-1 flex gap-2 text-base leading-5">
+          {ticket.name.split(" ")[0] + " - "} {ticket.ramal}
           <Bedge vip={ticket.vip} status={ticket.status} type={ticket.type} />
         </CardTitle>
         <CardDescription>{ticket.area}</CardDescription>
