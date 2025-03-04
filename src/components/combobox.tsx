@@ -16,7 +16,7 @@ const usersMoc = [
     name: "Rhuan",
     login: "rhuan.g.silva",
     cargo: "Analista",
-    area: "TI",
+    area: "Sexcretaria de comunicação social",
   },
   {
     id: 2,

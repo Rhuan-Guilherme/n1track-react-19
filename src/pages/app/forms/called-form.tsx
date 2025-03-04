@@ -10,6 +10,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { usePersistedForm } from "@/hooks/set-value-form-local-storage";
 import { queryClient } from "@/lib/query-cleint";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -97,7 +103,7 @@ export function CalledForm() {
       target: { name: "login", value: user.login },
     } as React.FocusEvent<HTMLInputElement>;
     const nomeEvent = {
-      target: { name: "nome", value: user.name },
+      target: { name: "name", value: user.name },
     } as React.FocusEvent<HTMLInputElement>;
 
     handleChange(loginEvent);
@@ -111,11 +117,18 @@ export function CalledForm() {
         onSubmit={handleSubmit(handleSubmitFormTicket)}
         className="dark:bg-accent border-accent-foreground/10 relative flex w-9/10 flex-col items-center justify-center gap-5 rounded-md border p-5 md:w-8/10 lg:w-7/10 xl:w-1/2"
       >
-        {loginWatched && loginWatched.length > 3 && (
+        {loginWatched && loginWatched.length > 2 && area && (
           <>
-            <div className="bg-foreground/10 absolute -top-9 flex w-full gap-1.5 rounded-sm border p-1 text-sm">
-              <div className="">{area}</div>-<div className="">{cargo}</div>
-            </div>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger className="text-foreground font-poppins absolute top-4 right-6 z-10 flex gap-1.5 rounded-sm border border-indigo-600 bg-indigo-400/30 px-3 text-sm">
+                  <div className="">{cargo}</div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <div className="font-poppins">{area}</div>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </>
         )}
 
@@ -137,7 +150,14 @@ export function CalledForm() {
               type="text"
               className="border-accent-foreground/15 bg-zinc-100 dark:bg-zinc-950"
               onFocus={() => setIsInputFocused(true)}
-              onInput={handleChange}
+              onInputCapture={handleChange}
+              onInput={(e) => {
+                const target = e.target as HTMLInputElement;
+                if (target.value.length < 2) {
+                  setArea("");
+                  setCargo("");
+                }
+              }}
               onBlur={() => setIsInputFocused(false)}
             />
 
