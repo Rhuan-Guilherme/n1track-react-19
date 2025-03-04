@@ -1,10 +1,6 @@
 import { useState, useEffect } from "react";
 
 export function usePersistedForm(formKey: string) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const getValue = (name: string) =>
-    localStorage.getItem(`@${formKey}-form-${name}`) || "";
-
   const [values, setValues] = useState<{ [key: string]: string }>({});
 
   useEffect(() => {
