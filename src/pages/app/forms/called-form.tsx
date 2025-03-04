@@ -20,6 +20,7 @@ import { usePersistedForm } from "@/hooks/set-value-form-local-storage";
 import { queryClient } from "@/lib/query-cleint";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
+import { Star } from "lucide-react";
 
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
@@ -139,6 +140,12 @@ export function CalledForm() {
           </>
         )}
 
+        {loginWatched && loginWatched.length > 2 && vip && (
+          <div className="text-foreground font-poppins absolute top-4 right-41 z-10 flex gap-1.5 rounded-sm border border-amber-600 bg-amber-400/30 p-0.5 px-3 text-sm">
+            <Star className="h-4 w-4 text-amber-400" />
+          </div>
+        )}
+
         <div className="flex w-full gap-3">
           <div className="flex w-full flex-col gap-3">
             <Label>Nome</Label>
@@ -163,6 +170,7 @@ export function CalledForm() {
                 if (target.value.length < 2) {
                   setArea("");
                   setCargo("");
+                  setVip(false);
                 }
               }}
               onBlur={() => setIsInputFocused(false)}
