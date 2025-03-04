@@ -40,6 +40,7 @@ interface User {
   name: string;
   area: string;
   cargo: string;
+  vip: boolean;
 }
 
 type formType = z.infer<typeof formSchema>;
@@ -47,6 +48,7 @@ type formType = z.infer<typeof formSchema>;
 export function CalledForm() {
   const [area, setArea] = useState("");
   const [cargo, setCargo] = useState("");
+  const [vip, setVip] = useState(false);
   const { clearFormStorage, handleChange } = usePersistedForm("n1track");
   const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
   const { register, handleSubmit, control, watch, setValue, reset } =
@@ -83,7 +85,7 @@ export function CalledForm() {
 
   async function handleSubmitFormTicket(data: formType) {
     try {
-      await createCalledApiFn({ ...data, area, cargo });
+      await createCalledApiFn({ ...data, area, cargo, vip });
       clearFormStorage();
       reset();
     } catch (error) {
@@ -92,8 +94,9 @@ export function CalledForm() {
   }
 
   const handleSelectLogin = (user: User) => {
-    console.log(user);
-
+    if (user.vip) {
+      setVip(true);
+    }
     setValue("login", user.login);
     setValue("name", user.name);
     setCargo(user.cargo);

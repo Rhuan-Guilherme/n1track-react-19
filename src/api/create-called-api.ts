@@ -9,13 +9,13 @@ interface createCalledApiRequest {
   local: string;
   area: string;
   cargo: string;
+  vip: boolean;
 }
 
 export async function createCalledApi(body: createCalledApiRequest) {
   const response = await api.post("/ticket/create", {
     ...body,
     type: "CHAMADO",
-    vip: false,
   });
 
   return response.data;

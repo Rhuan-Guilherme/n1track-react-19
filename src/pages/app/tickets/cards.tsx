@@ -88,7 +88,7 @@ export default function CardsComponent({ ticket }: GetTicketResponse) {
 
   return (
     <Card
-      className={`relative max-w-72 min-w-72 ${ticket.status === "FECHADO" && "border-2 border-emerald-700 opacity-40 dark:border-emerald-500"}`}
+      className={`relative max-w-72 min-w-72 ${ticket.status === "FECHADO" && "border-2 border-emerald-700 opacity-40 dark:border-emerald-500"} ${ticket.vip === true && "border-2 border-amber-300"}`}
     >
       <CardHeader>
         {ticket.status === "FECHADO" && (
@@ -111,8 +111,8 @@ export default function CardsComponent({ ticket }: GetTicketResponse) {
 
         <CardDescription>{formattedDate}</CardDescription>
         <CardTitle className="flex gap-2">
-          {ticket.name} - {ticket.ramal}
-          <Bedge status={ticket.status} type={ticket.type} />
+          {ticket.name.split(" ")[0]} - {ticket.ramal}
+          <Bedge vip={ticket.vip} status={ticket.status} type={ticket.type} />
         </CardTitle>
         <CardDescription>{ticket.area}</CardDescription>
       </CardHeader>

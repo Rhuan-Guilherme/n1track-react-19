@@ -1,9 +1,10 @@
 interface BedgeType {
   type: "CHAMADO" | "REITERACAO" | "TRANSFERENCIA" | "QUEDA";
   status: "ABERTO" | "FECHADO";
+  vip: boolean;
 }
 
-export default function Bedge({ type, status }: BedgeType) {
+export default function Bedge({ type, status, vip }: BedgeType) {
   const badgeStyles = {
     CHAMADO: {
       open: "border-indigo-500 bg-indigo-500/30 text-indigo-200",
@@ -36,12 +37,16 @@ export default function Bedge({ type, status }: BedgeType) {
   return (
     <span
       className={`font-poppins flex h-5 items-center justify-center gap-2 rounded-md border px-1 text-xs font-semibold ${
-        status === "ABERTO" ? open : closed
+        vip
+          ? "border-amber-500 bg-amber-500/30 text-amber-200"
+          : status === "ABERTO"
+            ? open
+            : closed
       }`}
     >
       <span
         className={`h-2 w-2 animate-pulse rounded-full ${
-          status === "ABERTO" ? dotOpen : dotClosed
+          vip ? "bg-amber-400" : status === "ABERTO" ? dotOpen : dotClosed
         }`}
       ></span>
       <p>
@@ -53,6 +58,7 @@ export default function Bedge({ type, status }: BedgeType) {
               ? "Transferência"
               : "Queda"}
       </p>
+      {vip && <span className="text-[10px] font-bold">(VIP)</span>}
     </span>
   );
 }

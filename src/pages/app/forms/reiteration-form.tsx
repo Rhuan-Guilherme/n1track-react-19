@@ -31,6 +31,7 @@ interface User {
   name: string;
   cargo: string;
   area: string;
+  vip: boolean;
 }
 
 type formType = z.infer<typeof formSchema>;
@@ -38,6 +39,8 @@ type formType = z.infer<typeof formSchema>;
 export function ReiterationForm() {
   const [area, setArea] = useState("");
   const [cargo, setCargo] = useState("");
+  const [vip, setVip] = useState(false);
+
   const { clearFormStorage, handleChange } = usePersistedForm("n1track");
 
   const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
@@ -70,7 +73,7 @@ export function ReiterationForm() {
 
   async function handleSubmitFormTicket(data: formType) {
     try {
-      await createReiterationApiFn({ ...data, area, cargo });
+      await createReiterationApiFn({ ...data, area, cargo, vip });
       clearFormStorage();
       reset();
     } catch (error) {
@@ -79,6 +82,9 @@ export function ReiterationForm() {
   }
 
   const handleSelectLogin = (user: User) => {
+    if (user.vip) {
+      setVip(true);
+    }
     setValue("login", user.login);
     setValue("name", user.name);
     setCargo(user.cargo);

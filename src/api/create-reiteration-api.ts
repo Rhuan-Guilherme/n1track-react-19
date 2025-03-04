@@ -7,13 +7,13 @@ interface createReiterationApiRequest {
   chamado: string;
   area: string;
   cargo: string;
+  vip: boolean;
 }
 
 export async function createReiterationApi(body: createReiterationApiRequest) {
   const response = await api.post("/ticket/create", {
     ...body,
     type: "REITERACAO",
-    vip: false,
   });
 
   return response.data;

@@ -1,5 +1,5 @@
-// import { useRef, useState } from "react"
-
+import { findStfUsers } from "@/api/find-stfusers";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 
 interface User {
@@ -8,44 +8,12 @@ interface User {
   login: string;
   cargo: string;
   area: string;
+  vip: boolean;
 }
-
-const usersMoc = [
-  {
-    id: 1,
-    name: "Rhuan",
-    login: "rhuan.g.silva",
-    cargo: "Analista",
-    area: "Sexcretaria de comunicação social",
-  },
-  {
-    id: 2,
-    name: "Felipe",
-    login: "felipe.v.souza",
-    cargo: "Desenvolvedor",
-    area: "TI",
-  },
-  {
-    id: 3,
-    name: "Lucas",
-    login: "lucas.g.alves",
-    cargo: "Analista",
-    area: "TI",
-  },
-  {
-    id: 4,
-    name: "João",
-    login: "joao.v.alves",
-    cargo: "Desenvolvedor",
-    area: "TI",
-  },
-  { id: 5, name: "Ana", login: "ana.v.souza", cargo: "Gerente", area: "TI" },
-];
 
 interface ComboboxProps {
   onSelect: (user: User) => void;
   searchValue: string;
-  // inputRef: React.RefObject<HTMLInputElement>
   isInputFocused: boolean;
 }
 
@@ -56,10 +24,11 @@ export function Combobox({
 }: ComboboxProps) {
   const [open, setOpen] = useState<boolean>(false);
   const [users, setUsers] = useState<User[]>([]);
+  const [debouncedSearch, setDebouncedSearch] = useState<string>(searchValue);
   const comboboxRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    function handleClickOutSide(event: MouseEvent) {
+    function handleClickOutside(event: MouseEvent) {
       if (
         comboboxRef.current &&
         !comboboxRef.current.contains(event.target as Node)
@@ -67,10 +36,10 @@ export function Combobox({
         setOpen(false);
       }
     }
-    document.addEventListener("mousedown", handleClickOutSide, false);
+    document.addEventListener("mousedown", handleClickOutside, false);
     return () =>
-      document.removeEventListener("mousedown", handleClickOutSide, false);
-  });
+      document.removeEventListener("mousedown", handleClickOutside, false);
+  }, []);
 
   useEffect(() => {
     if (isInputFocused) {
@@ -79,14 +48,31 @@ export function Combobox({
   }, [isInputFocused]);
 
   useEffect(() => {
-    const filteredUsers = usersMoc.filter(
-      (user) =>
-        user.login.toLowerCase().includes(searchValue.toLowerCase()) ||
-        user.name.toLowerCase().includes(searchValue.toLowerCase()),
-    );
-
-    setUsers(filteredUsers);
+    setUsers([]);
+    const handler = setTimeout(() => {
+      setDebouncedSearch(searchValue);
+    }, 500);
+    return () => clearTimeout(handler);
   }, [searchValue]);
+
+  const { data: stfusers, isLoading } = useQuery({
+    queryKey: ["users", debouncedSearch],
+    queryFn: () => findStfUsers(debouncedSearch),
+    enabled: !!debouncedSearch.trim(),
+    networkMode: "always",
+    refetchOnMount: true,
+    refetchOnWindowFocus: false,
+    retry: false,
+    gcTime: 0,
+  });
+
+  useEffect(() => {
+    console.log(stfusers);
+
+    if (stfusers) {
+      setUsers(stfusers.users);
+    }
+  }, [stfusers]);
 
   const handleSelect = (user: User) => {
     onSelect(user);
@@ -98,20 +84,27 @@ export function Combobox({
       {open && (
         <div
           ref={comboboxRef}
-          className="border-border bg-popover text-popover-foreground absolute top-17 z-50 max-h-60 w-full overflow-y-auto rounded-md border p-1 shadow-md"
+          className="border-border bg-popover text-popover-foreground absolute top-17 z-50 max-h-60 w-full overflow-hidden overflow-y-auto rounded-md border p-1 shadow-md"
         >
-          {users &&
-            users.map((user) => {
-              return (
-                <button
-                  key={user.id}
-                  className="hover:bg-accent hover:text-accent-foreground focus:bg-accent relative flex w-full cursor-pointer items-center rounded-sm px-2 py-1.5 text-sm outline-none select-none"
-                  onClick={() => handleSelect(user)}
-                >
-                  {user.login}
-                </button>
-              );
-            })}
+          {isLoading ? (
+            <p className="text-muted-foreground p-2 text-center text-sm">
+              Carregando...
+            </p>
+          ) : users.length > 0 ? (
+            users.map((user) => (
+              <button
+                key={user.id}
+                className="hover:bg-accent hover:text-accent-foreground focus:bg-accent relative flex w-full cursor-pointer items-center rounded-sm px-2 py-1.5 text-sm outline-none select-none"
+                onClick={() => handleSelect(user)}
+              >
+                {user.login}
+              </button>
+            ))
+          ) : (
+            <p className="text-muted-foreground p-2 text-center text-sm">
+              nenhum resultado encontrado.
+            </p>
+          )}
         </div>
       )}
     </>
