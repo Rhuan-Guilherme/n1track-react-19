@@ -303,9 +303,36 @@ export function CalledForm() {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem className="min-h-6" value=" "></SelectItem>
-                      <SelectItem value="Local 1">Local 1</SelectItem>
-                      <SelectItem value="Local 2">Local 2</SelectItem>
-                      <SelectItem value="Local 3">Local 3</SelectItem>
+                      <SelectItem value="Anexo 2A / 6° andar / Gabinete Ministra Cármen Lúcia">
+                        Gabinete Min. Cármen Lúcia
+                      </SelectItem>
+                      <SelectItem value="Anexo 2A / 6° andar / Gabinete Ministro Gilmar Mendes">
+                        Gabinete Min. Gilmar Mendes
+                      </SelectItem>
+                      <SelectItem value="Anexo 2A / 5° andar / Gabinete Ministro André Mendonça">
+                        Gabinete Min. André Mendonça
+                      </SelectItem>
+                      <SelectItem value="Anexo 2A / 4° andar / Gabinete Ministro Dias Toffoli">
+                        Gabinete Min. Dias Toffoli
+                      </SelectItem>
+                      <SelectItem value="Anexo 2A / 5° andar / Gabinete Ministro Nunes Marques">
+                        Gabinete Min. Nunes Marques
+                      </SelectItem>
+                      <SelectItem value="Anexo 2A / 4° andar / Gabinete Ministro Cristiano Zanin">
+                        Gabinete Min. Cristiano Zanin
+                      </SelectItem>
+                      <SelectItem value="Anexo 2A / 3° andar / Gabinete Ministro Luiz Fux">
+                        Gabinete Min. Luiz Fux
+                      </SelectItem>
+                      <SelectItem value="Anexo 2A / 5° andar / Gabinete Ministro Flávio Dino">
+                        Gabinete Min. Flávio Dino
+                      </SelectItem>
+                      <SelectItem value="Anexo 2A / 3° andar / Gabinete Ministro Edson Fachin">
+                        Gabinete Min. Edson Fachin
+                      </SelectItem>
+                      <SelectItem value="Anexo 2A / 3° andar / Gabinete Ministro Alexandre de Moraes">
+                        Gabinete Min. Alexandre de Moraes
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                 );
