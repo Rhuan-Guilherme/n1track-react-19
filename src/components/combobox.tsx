@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 
 interface User {
-  id: number;
+  id: string;
   name: string;
   login: string;
   cargo: string;

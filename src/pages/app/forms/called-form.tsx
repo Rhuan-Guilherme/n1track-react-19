@@ -36,7 +36,7 @@ const formSchema = z.object({
 });
 
 interface User {
-  id: number;
+  id: string;
   login: string;
   name: string;
   area: string;
