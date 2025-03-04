@@ -67,8 +67,6 @@ export function Combobox({
   });
 
   useEffect(() => {
-    console.log(stfusers);
-
     if (stfusers) {
       setUsers(stfusers.users);
     }

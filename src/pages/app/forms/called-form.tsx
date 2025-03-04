@@ -124,7 +124,11 @@ export function CalledForm() {
           <>
             <TooltipProvider>
               <Tooltip>
-                <TooltipTrigger className="text-foreground font-poppins absolute top-4 right-6 z-10 flex gap-1.5 rounded-sm border border-indigo-600 bg-indigo-400/30 px-3 text-sm">
+                <TooltipTrigger
+                  asChild
+                  type="button"
+                  className="text-foreground font-poppins absolute top-4 right-6 z-10 flex gap-1.5 rounded-sm border border-indigo-600 bg-indigo-400/30 px-3 text-sm"
+                >
                   <div className="">{cargo}</div>
                 </TooltipTrigger>
                 <TooltipContent>
