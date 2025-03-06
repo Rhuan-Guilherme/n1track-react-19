@@ -27,7 +27,7 @@ export function TransferForm() {
       ramal: localStorage.getItem("@n1track-form-ramal") || undefined,
       destinatario:
         localStorage.getItem("@n1track-form-destinatario") || undefined,
-      name: localStorage.getItem("@n1track-form-nome") || undefined,
+      name: localStorage.getItem("@n1track-form-name") || undefined,
     },
   });
 

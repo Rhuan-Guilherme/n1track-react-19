@@ -21,7 +21,7 @@ import { usePersistedForm } from "@/hooks/set-value-form-local-storage";
 import { queryClient } from "@/lib/query-cleint";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import { Brain, Star } from "lucide-react";
+import { Brain, Crown } from "lucide-react";
 
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
@@ -145,7 +145,7 @@ export function CalledForm() {
       <title>N1Track | Chamados</title>
       <form
         onSubmit={handleSubmit(handleSubmitFormTicket)}
-        className="dark:bg-accent border-accent-foreground/10 relative flex w-9/10 flex-col items-center justify-center gap-5 rounded-md border p-5 md:w-8/10 lg:w-7/10 xl:w-1/2"
+        className="dark:bg-accent border-accent-foreground/10 relative flex w-9/10 flex-col items-center justify-center gap-5 rounded-md border p-5 md:w-8/10 lg:w-7/10 xl:w-2/3 2xl:w-1/2"
       >
         {loginWatched && loginWatched.length > 2 && area && (
           <>
@@ -154,9 +154,17 @@ export function CalledForm() {
                 <TooltipTrigger
                   asChild
                   type="button"
-                  className="text-foreground font-poppins absolute top-4 right-6 z-10 flex gap-1.5 rounded-sm border border-indigo-600 bg-indigo-400/30 px-3 text-sm"
+                  className={`text-foreground font-poppins sm absolute -top-4.5 right-1 z-10 flex gap-1.5 rounded-sm border px-3 text-xs sm:top-1 lg:top-4 lg:right-6 xl:text-sm ${vip ? "border-amber-600 bg-amber-400/30" : "border-indigo-600 bg-indigo-400/30"}`}
                 >
-                  <div className="">{cargo}</div>
+                  {vip ? (
+                    <div className="flex items-center justify-center">
+                      <Crown className="h-4 w-4" />
+                      <span className="font-robotoMono">VIP - </span>
+                      {cargo}
+                    </div>
+                  ) : (
+                    <div className="">{cargo}</div>
+                  )}
                 </TooltipTrigger>
                 <TooltipContent>
                   <div className="font-poppins">{area}</div>
@@ -164,12 +172,6 @@ export function CalledForm() {
               </Tooltip>
             </TooltipProvider>
           </>
-        )}
-
-        {loginWatched && loginWatched.length > 2 && vip && (
-          <div className="text-foreground font-poppins absolute top-4 right-41 z-10 flex gap-1.5 rounded-sm border border-amber-600 bg-amber-400/30 p-0.5 px-3 text-sm">
-            <Star className="h-4 w-4 text-amber-400" />
-          </div>
         )}
 
         <div className="flex w-full gap-3">
@@ -240,7 +242,7 @@ export function CalledForm() {
               {...register("informacao")}
               type="text"
               onInputCapture={handleChange}
-              className="border-accent-foreground/15 bg-zinc-100 dark:bg-zinc-950"
+              className="border-accent-foreground/15 bg-zinc-100 pr-10 dark:bg-zinc-950"
             />
           </div>
 

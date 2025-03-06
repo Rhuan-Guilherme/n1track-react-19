@@ -13,6 +13,7 @@ import { usePersistedForm } from "@/hooks/set-value-form-local-storage";
 import { queryClient } from "@/lib/query-cleint";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
+import { Crown } from "lucide-react";
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -113,8 +114,20 @@ export function ReiterationForm() {
           <>
             <TooltipProvider>
               <Tooltip>
-                <TooltipTrigger className="text-foreground font-poppins absolute top-4 right-6 z-10 flex gap-1.5 rounded-sm border border-indigo-600 bg-indigo-400/30 px-3 text-sm">
-                  <div className="">{cargo}</div>
+                <TooltipTrigger
+                  asChild
+                  type="button"
+                  className={`text-foreground font-poppins sm absolute -top-4.5 right-1 z-10 flex gap-1.5 rounded-sm border px-3 text-xs sm:top-1 lg:top-4 lg:right-6 xl:text-sm ${vip ? "border-amber-600 bg-amber-400/30" : "border-indigo-600 bg-indigo-400/30"}`}
+                >
+                  {vip ? (
+                    <div className="flex items-center justify-center">
+                      <Crown className="h-4 w-4" />
+                      <span className="font-robotoMono">VIP - </span>
+                      {cargo}
+                    </div>
+                  ) : (
+                    <div className="">{cargo}</div>
+                  )}
                 </TooltipTrigger>
                 <TooltipContent>
                   <div className="font-poppins">{area}</div>
@@ -140,6 +153,15 @@ export function ReiterationForm() {
               {...register("login")}
               type="text"
               className="border-accent-foreground/15 bg-zinc-100 dark:bg-zinc-950"
+              onInputCapture={handleChange}
+              onInput={(e) => {
+                const target = e.target as HTMLInputElement;
+                if (target.value.length < 2) {
+                  setArea("");
+                  setCargo("");
+                  setVip(false);
+                }
+              }}
               onFocus={() => setIsInputFocused(true)}
               onBlur={() => setIsInputFocused(false)}
             />
