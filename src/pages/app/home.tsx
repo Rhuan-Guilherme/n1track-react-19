@@ -6,6 +6,7 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
@@ -16,6 +17,7 @@ import { useQuery } from "@tanstack/react-query";
 import {
   BellRing,
   BookOpenCheck,
+  Check,
   CopyX,
   CrownIcon,
   LayoutList,
@@ -27,18 +29,15 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 
 export function Home() {
-  const navigate = useNavigate();
   const [isDeleted, setIsDeleted] = useState<boolean>(false);
+  const [isVip, setIsVip] = useState<boolean>(false);
 
-  useEffect(() => {
-    const params = new URLSearchParams();
-    if (isDeleted) params.set("isDeleted", "true");
-
-    navigate("?" + params.toString());
-  }, [isDeleted, navigate]);
+  const params = new URLSearchParams();
+  if (isDeleted) params.append("isDeleted", "true");
+  if (isVip) params.append("vip", "true");
+  const queryString = `?${params.toString()}`;
 
   const {
     data: tickets,
@@ -47,8 +46,8 @@ export function Home() {
     failureCount,
     refetch,
   } = useQuery({
-    queryKey: ["tickets", isDeleted],
-    queryFn: () => getTicketsByUser(isDeleted),
+    queryKey: ["tickets", isDeleted, isVip],
+    queryFn: () => getTicketsByUser(queryString),
   });
 
   useEffect(() => {
@@ -86,7 +85,10 @@ export function Home() {
             <DropdownMenuLabel>Filtre seus chamados:</DropdownMenuLabel>
             <DropdownMenuGroup>
               <DropdownMenuItem
-                onClick={() => setIsDeleted(false)}
+                onClick={() => {
+                  setIsDeleted(false);
+                  setIsVip(false);
+                }}
                 className="cursor-pointer"
               >
                 <LayoutList className="h-5 w-5" />
@@ -119,16 +121,29 @@ export function Home() {
                 Listar quedas
               </DropdownMenuItem>
               <Separator />
-              <DropdownMenuItem className="cursor-pointer">
+              <DropdownMenuItem
+                onClick={() => setIsVip(!isVip)}
+                className="cursor-pointer"
+              >
                 <CrownIcon className="h-5 w-5" />
                 Chamados VIPs
+                {isVip && (
+                  <DropdownMenuShortcut>
+                    <Check className="h-4 w-4" />
+                  </DropdownMenuShortcut>
+                )}
               </DropdownMenuItem>
               <DropdownMenuItem
-                onClick={() => setIsDeleted(true)}
+                onClick={() => setIsDeleted(!isDeleted)}
                 className="cursor-pointer"
               >
                 <Trash className="h-5 w-5" />
                 Chamados excluidos
+                {isDeleted && (
+                  <DropdownMenuShortcut>
+                    <Check className="h-4 w-4" />
+                  </DropdownMenuShortcut>
+                )}
               </DropdownMenuItem>
             </DropdownMenuGroup>
           </DropdownMenuContent>

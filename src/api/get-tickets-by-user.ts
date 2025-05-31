@@ -22,10 +22,10 @@ export interface GetTicketsResponse {
   }[];
 }
 
-export async function getTicketsByUser(isDeleted: boolean) {
-  const response = await api.get(
-    `/tickets${isDeleted === true ? "?isDeleted=true " : "?"}`,
-  );
+export async function getTicketsByUser(query: string) {
+  console.log(query);
+
+  const response = await api.get(`/tickets${query}`);
 
   return response.data as GetTicketsResponse;
 }
