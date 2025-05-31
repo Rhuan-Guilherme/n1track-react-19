@@ -13,6 +13,7 @@ export interface GetTicketsResponse {
     destinatario: string;
     area: string;
     created_at: string;
+    isDeleted: boolean;
     type: "CHAMADO" | "REITERACAO" | "TRANSFERENCIA" | "QUEDA";
     vip: boolean;
     status: "ABERTO" | "FECHADO";
@@ -21,8 +22,10 @@ export interface GetTicketsResponse {
   }[];
 }
 
-export async function getTicketsByUser() {
-  const response = await api.get("/tickets");
+export async function getTicketsByUser(isDeleted: boolean) {
+  const response = await api.get(
+    `/tickets${isDeleted === true ? "?isDeleted=true " : "?"}`,
+  );
 
   return response.data as GetTicketsResponse;
 }

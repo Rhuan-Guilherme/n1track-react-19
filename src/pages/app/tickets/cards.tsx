@@ -37,6 +37,7 @@ interface GetTicketResponse {
     destinatario: string;
     area: string;
     created_at: string;
+    isDeleted: boolean;
     type: "CHAMADO" | "REITERACAO" | "TRANSFERENCIA" | "QUEDA";
     vip: boolean;
     status: "ABERTO" | "FECHADO";
@@ -88,7 +89,7 @@ export default function CardsComponent({ ticket }: GetTicketResponse) {
 
   return (
     <Card
-      className={`relative max-w-72 min-w-72 ${ticket.status === "FECHADO" && "border-2 border-emerald-700 opacity-40 dark:border-emerald-500"} ${ticket.vip === true && "border-2 border-amber-300"}`}
+      className={`relative max-w-72 min-w-72 ${ticket.status === "FECHADO" && "border-2 border-emerald-700 opacity-40 dark:border-emerald-500"} ${ticket.vip === true && "border-2 border-amber-300"} ${ticket.isDeleted === true && "border-2 border-rose-500"}`}
     >
       <CardHeader>
         {ticket.status === "FECHADO" && (
@@ -100,7 +101,7 @@ export default function CardsComponent({ ticket }: GetTicketResponse) {
           </button>
         )}
 
-        {ticket.status === "ABERTO" && (
+        {ticket.status === "ABERTO" && ticket.isDeleted === false && (
           <button
             onClick={() => deleteTicketFn(ticket.id)}
             className="border-border bg-accent-foreground/10 top- absolute right-1.5 cursor-pointer rounded-sm border p-0.5 transition-all hover:bg-rose-500"
@@ -121,7 +122,7 @@ export default function CardsComponent({ ticket }: GetTicketResponse) {
         <DescriptionCard id={`desc-${ticket.id}`} ticket={ticket} />
         <div className="bg-border mt-3 h-0.5 w-full"></div>
       </CardContent>
-      {ticket.status === "ABERTO" && (
+      {ticket.status === "ABERTO" && ticket.isDeleted === false && (
         <CardFooter className="flex items-center justify-center gap-2">
           <Dialog open={isOpenModal} onOpenChange={setIsOpenModal}>
             <DialogTrigger asChild>
@@ -148,6 +149,19 @@ export default function CardsComponent({ ticket }: GetTicketResponse) {
             variant="secondary"
           >
             concluir
+          </Button>
+        </CardFooter>
+      )}
+      {ticket.isDeleted === true && (
+        <CardFooter className="flex items-center justify-center gap-2">
+          <Button
+            onClick={() =>
+              toast("Chamado restaurado. Volte para a listagem para revisá-lo.")
+            }
+            className="flex-1 cursor-pointer"
+            variant="secondary"
+          >
+            Restaurar chamado
           </Button>
         </CardFooter>
       )}
