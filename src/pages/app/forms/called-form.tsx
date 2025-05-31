@@ -190,6 +190,7 @@ export function CalledForm() {
             <Input
               {...register("login")}
               type="text"
+              autoComplete="off"
               className="border-accent-foreground/15 bg-zinc-100 dark:bg-zinc-950"
               onFocus={() => setIsInputFocused(true)}
               onInputCapture={handleChange}
@@ -207,7 +208,7 @@ export function CalledForm() {
             {loginWatched && loginWatched.length > 2 && (
               <Combobox
                 onSelect={handleSelectLogin}
-                searchValue={loginWatched}
+                searchValue={loginWatched.toLocaleLowerCase()}
                 isInputFocused={isInputFocused}
               />
             )}
