@@ -33,10 +33,14 @@ import { Outlet } from "react-router-dom";
 export function Home() {
   const [isDeleted, setIsDeleted] = useState<boolean>(false);
   const [isVip, setIsVip] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isClose, setIsClose] = useState<boolean>(false);
 
   const params = new URLSearchParams();
   if (isDeleted) params.append("isDeleted", "true");
   if (isVip) params.append("vip", "true");
+  if (isOpen) params.append("open", "true");
+  if (isClose) params.append("close", "true");
   const queryString = `?${params.toString()}`;
 
   const {
@@ -46,7 +50,7 @@ export function Home() {
     failureCount,
     refetch,
   } = useQuery({
-    queryKey: ["tickets", isDeleted, isVip],
+    queryKey: ["tickets", isDeleted, isVip, isOpen, isClose],
     queryFn: () => getTicketsByUser(queryString),
   });
 
@@ -95,13 +99,29 @@ export function Home() {
                 Listar todos
               </DropdownMenuItem>
               <Separator />
-              <DropdownMenuItem className="cursor-pointer">
+              <DropdownMenuItem
+                onClick={() => setIsOpen(!isOpen)}
+                className="cursor-pointer"
+              >
                 <BookOpenCheck className="h-5 w-5" />
                 Listar abertos
+                {isOpen && (
+                  <DropdownMenuShortcut>
+                    <Check className="h-4 w-4" />
+                  </DropdownMenuShortcut>
+                )}
               </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer">
+              <DropdownMenuItem
+                onClick={() => setIsClose(!isClose)}
+                className="cursor-pointer"
+              >
                 <CopyX className="h-5 w-5" />
                 Listar fechados
+                {isClose && (
+                  <DropdownMenuShortcut>
+                    <Check className="h-4 w-4" />
+                  </DropdownMenuShortcut>
+                )}
               </DropdownMenuItem>
               <Separator />
               <DropdownMenuItem className="cursor-pointer">
