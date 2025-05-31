@@ -40,10 +40,13 @@ export function SingUp() {
         navigate("/sing-in");
       }, 2000);
     } catch (error) {
-      if (error instanceof AxiosError) {
-        toast.error(error.response?.data.error);
+      if (error instanceof AxiosError && error.code !== "ERR_NETWORK") {
+        toast(error.response?.data.error);
+      } else {
+        toast(
+          "Desculpe, estamos com problemas na comunicação com o servidor, tente novamente mais tarde. ",
+        );
       }
-      console.log(error);
     }
   }
 

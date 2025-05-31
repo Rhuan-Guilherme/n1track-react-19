@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const api = axios.create({
-  baseURL: "https://n1track-node.onrender.com",
+  baseURL: "http://localhost:3333",
   headers: {
     "Content-Type": "application/json",
     Authorization: `Bearer ${localStorage.getItem("@n1track/token")}`,

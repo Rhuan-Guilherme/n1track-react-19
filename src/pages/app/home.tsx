@@ -1,15 +1,23 @@
 import { getTicketsByUser } from "@/api/get-tickets-by-user";
 import { ButtonSelectForm } from "@/components/button-select-form";
+import { useErrorNetworkApi } from "@/hooks/error-network-api";
 import CardsComponent from "@/pages/app/tickets/cards";
 import { useQuery } from "@tanstack/react-query";
 import { BellRing, PhoneForwarded, PhoneOff, ScrollText } from "lucide-react";
 import { Outlet } from "react-router-dom";
 
 export function Home() {
-  const { data: tickets } = useQuery({
+  const {
+    data: tickets,
+    error,
+    isError,
+    failureCount,
+  } = useQuery({
     queryKey: ["tickets"],
     queryFn: getTicketsByUser,
   });
+
+  useErrorNetworkApi({ error, failureCount, isError });
 
   return (
     <>

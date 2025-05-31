@@ -37,10 +37,13 @@ export function SingIn() {
       localStorage.setItem("@n1track/token", token);
       navigate("/");
     } catch (error) {
-      if (error instanceof AxiosError) {
+      if (error instanceof AxiosError && error.code !== "ERR_NETWORK") {
         toast(error.response?.data.error);
+      } else {
+        toast(
+          "Desculpe, estamos com problemas na comunicação com o servidor, tente novamente mais tarde. ",
+        );
       }
-      console.log(error);
     }
   }
 

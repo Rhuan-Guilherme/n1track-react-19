@@ -19,16 +19,24 @@ import { useQuery } from "@tanstack/react-query";
 import { getUserApi } from "@/api/get-user";
 import { Skeleton } from "./ui/skeleton";
 import { useNavigate } from "react-router-dom";
+import { useErrorNetworkApi } from "@/hooks/error-network-api";
 
 export function NavUser() {
   const { isMobile } = useSidebar();
   const navigate = useNavigate();
 
-  const { data: profile } = useQuery({
+  const {
+    data: profile,
+    error,
+    failureCount,
+    isError,
+  } = useQuery({
     queryKey: ["user"],
     queryFn: getUserApi,
     staleTime: Infinity,
   });
+
+  useErrorNetworkApi({ error, failureCount, isError });
 
   function logout() {
     localStorage.removeItem("@n1track/token");
