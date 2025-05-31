@@ -35,12 +35,16 @@ export function Home() {
   const [isVip, setIsVip] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isClose, setIsClose] = useState<boolean>(false);
+  const [isType, setIsType] = useState<
+    "CHAMADO" | "REITERACAO" | "TRANSFERENCIA" | "QUEDA" | undefined
+  >(undefined);
 
   const params = new URLSearchParams();
   if (isDeleted) params.append("isDeleted", "true");
   if (isVip) params.append("vip", "true");
   if (isOpen) params.append("open", "true");
   if (isClose) params.append("close", "true");
+  if (isType) params.append("type", isType);
   const queryString = `?${params.toString()}`;
 
   const {
@@ -50,7 +54,7 @@ export function Home() {
     failureCount,
     refetch,
   } = useQuery({
-    queryKey: ["tickets", isDeleted, isVip, isOpen, isClose],
+    queryKey: ["tickets", isDeleted, isVip, isOpen, isClose, isType],
     queryFn: () => getTicketsByUser(queryString),
   });
 
@@ -124,21 +128,53 @@ export function Home() {
                 )}
               </DropdownMenuItem>
               <Separator />
-              <DropdownMenuItem className="cursor-pointer">
+              <DropdownMenuItem
+                onClick={() => setIsType("CHAMADO")}
+                className="cursor-pointer"
+              >
                 <ScrollText className="h-5 w-5" />
                 Listar chamados
+                {isType === "CHAMADO" && (
+                  <DropdownMenuShortcut>
+                    <Check className="h-4 w-4" />
+                  </DropdownMenuShortcut>
+                )}
               </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer">
+              <DropdownMenuItem
+                onClick={() => setIsType("REITERACAO")}
+                className="cursor-pointer"
+              >
                 <BellRing className="h-5 w-5" />
                 Listar reiterações
+                {isType === "REITERACAO" && (
+                  <DropdownMenuShortcut>
+                    <Check className="h-4 w-4" />
+                  </DropdownMenuShortcut>
+                )}
               </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer">
+              <DropdownMenuItem
+                onClick={() => setIsType("TRANSFERENCIA")}
+                className="cursor-pointer"
+              >
                 <PhoneForwarded className="h-5 w-5" />
                 Listar transaferências
+                {isType === "TRANSFERENCIA" && (
+                  <DropdownMenuShortcut>
+                    <Check className="h-4 w-4" />
+                  </DropdownMenuShortcut>
+                )}
               </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer">
+              <DropdownMenuItem
+                onClick={() => setIsType("QUEDA")}
+                className="cursor-pointer"
+              >
                 <PhoneOff className="h-5 w-5" />
                 Listar quedas
+                {isType === "QUEDA" && (
+                  <DropdownMenuShortcut>
+                    <Check className="h-4 w-4" />
+                  </DropdownMenuShortcut>
+                )}
               </DropdownMenuItem>
               <Separator />
               <DropdownMenuItem
