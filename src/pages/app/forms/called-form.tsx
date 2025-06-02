@@ -1,5 +1,6 @@
 import { createCalledApi } from "@/api/create-called-api";
 import { formatTextApi } from "@/api/format-text-api";
+import { getCriticalApi } from "@/api/get-critical";
 import { Combobox } from "@/components/combobox";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
@@ -21,7 +22,7 @@ import {
 import { usePersistedForm } from "@/hooks/set-value-form-local-storage";
 import { queryClient } from "@/lib/query-cleint";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { AlertCircleIcon, Brain, Crown } from "lucide-react";
 
 import { useState } from "react";
@@ -59,7 +60,7 @@ interface FormatEmailResponse {
 }
 
 export function CalledForm() {
-  const [critico, setCritico] = useState<boolean>(true);
+  const [critico, setCritico] = useState<boolean>(false);
   const [area, setArea] = useState("");
   const [cargo, setCargo] = useState("");
   const [vip, setVip] = useState(false);
@@ -90,11 +91,21 @@ export function CalledForm() {
     },
   });
 
+  const { data: critical } = useQuery({
+    queryKey: ["critical"],
+    queryFn: getCriticalApi,
+  });
+
+  console.log(critico);
+
   async function handleSubmitFormTicket(data: formType) {
     try {
       await createCalledApiFn({ ...data, area, cargo, vip });
       clearFormStorage();
       reset();
+      if (critical) {
+        setValue("informacao", critical.description);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -341,12 +352,12 @@ export function CalledForm() {
           <Button disabled={isPending} className="cursor-pointer" type="submit">
             {isPending ? "Aguarde..." : "Registrar"}
           </Button>
-          {critico && (
+          {critical && (
             <div>
               <Alert className="border-rose-500">
                 <AlertCircleIcon />
-                <AlertDescription>
-                  STF Digital com lentidão. Link: 2332123
+                <AlertDescription className="flex items-center justify-center">
+                  {critical.title}. Link: {critical.link}{" "}
                 </AlertDescription>
               </Alert>
             </div>
