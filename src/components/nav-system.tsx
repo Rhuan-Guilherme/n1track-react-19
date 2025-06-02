@@ -10,6 +10,7 @@ import { AlertCircle, BookOpenCheck, Star } from "lucide-react";
 import { Dialog, DialogTrigger } from "./ui/dialog";
 import { VipsDropDownContent } from "./dropdown/vips-dropdown-content";
 import { BindsDropDownContent } from "./dropdown/binds-dropdown-content";
+import { CriticalsDropDownContent } from "./dropdown/criticals-dropdown-content";
 
 export function NavSystem() {
   return (
@@ -43,10 +44,17 @@ export function NavSystem() {
           </Dialog>
         </SidebarMenuItem>
         <SidebarMenuItem>
-          <SidebarMenuButton>
-            <AlertCircle />
-            Chamados criticos
-          </SidebarMenuButton>
+          <Dialog>
+            <DialogTrigger asChild>
+              <SidebarMenuButton asChild tooltip="Menu">
+                <button className="cursor-pointer">
+                  <AlertCircle />
+                  <span>Chamados criticos</span>
+                </button>
+              </SidebarMenuButton>
+            </DialogTrigger>
+            <CriticalsDropDownContent />
+          </Dialog>
         </SidebarMenuItem>
       </SidebarMenu>
     </SidebarGroup>
