@@ -13,6 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
 import {
   Tooltip,
   TooltipContent,
@@ -25,7 +26,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { AlertCircleIcon, Brain, Crown } from "lucide-react";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -96,14 +97,20 @@ export function CalledForm() {
     queryFn: getCriticalApi,
   });
 
-  console.log(critico);
+  useEffect(() => {
+    if (critico && critical) {
+      setValue("informacao", critical?.description);
+    } else {
+      setValue("informacao", "");
+    }
+  }, [critical, critico, setValue]);
 
   async function handleSubmitFormTicket(data: formType) {
     try {
       await createCalledApiFn({ ...data, area, cargo, vip });
       clearFormStorage();
       reset();
-      if (critical) {
+      if (critico && critical) {
         setValue("informacao", critical.description);
       }
     } catch (error) {
@@ -354,11 +361,12 @@ export function CalledForm() {
           </Button>
           {critical && (
             <div>
-              <Alert className="border-rose-500">
+              <Alert className="flex items-center justify-center border-rose-500">
                 <AlertCircleIcon />
                 <AlertDescription className="flex items-center justify-center">
                   {critical.title}. Link: {critical.link}{" "}
                 </AlertDescription>
+                <Switch onCheckedChange={() => setCritico(!critico)} />
               </Alert>
             </div>
           )}
