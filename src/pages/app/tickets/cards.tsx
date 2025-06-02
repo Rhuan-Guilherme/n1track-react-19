@@ -23,6 +23,7 @@ import { deleteTicket } from "@/api/delete-ticket";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { UpdateTicketContent } from "@/components/dropdown/update-tickets-content";
 import { useState } from "react";
+import { restoreTicket } from "@/api/restore-ticket";
 
 interface GetTicketResponse {
   ticket: {
@@ -72,6 +73,13 @@ export default function CardsComponent({ ticket }: GetTicketResponse) {
 
   const { mutateAsync: deleteTicketFn } = useMutation({
     mutationFn: deleteTicket,
+    async onSuccess(_, id) {
+      deleteItem(id);
+    },
+  });
+
+  const { mutateAsync: restoreTicketFn } = useMutation({
+    mutationFn: restoreTicket,
     async onSuccess(_, id) {
       deleteItem(id);
     },
@@ -155,9 +163,12 @@ export default function CardsComponent({ ticket }: GetTicketResponse) {
       {ticket.isDeleted === true && (
         <CardFooter className="flex items-center justify-center gap-2">
           <Button
-            onClick={() =>
-              toast("Chamado restaurado. Volte para a listagem para revisá-lo.")
-            }
+            onClick={() => {
+              restoreTicketFn(ticket.id);
+              toast(
+                "Chamado restaurado. Volte para a listagem para revisá-lo.",
+              );
+            }}
             className="flex-1 cursor-pointer"
             variant="secondary"
           >

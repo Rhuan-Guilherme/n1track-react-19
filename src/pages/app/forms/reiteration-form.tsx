@@ -59,16 +59,8 @@ export function ReiterationForm() {
 
   const { mutateAsync: createReiterationApiFn, isPending } = useMutation({
     mutationFn: createReiterationApi,
-    async onSuccess(data) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      queryClient.setQueryData(["tickets"], (oldData: any) => {
-        if (!oldData) return { tickets: [data.ticket] };
-
-        return {
-          ...oldData,
-          tickets: [data.ticket, ...oldData.tickets],
-        };
-      });
+    async onSuccess() {
+      await queryClient.invalidateQueries({ queryKey: ["tickets"] });
     },
   });
 

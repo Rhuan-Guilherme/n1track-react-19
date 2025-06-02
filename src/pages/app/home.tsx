@@ -96,6 +96,7 @@ export function Home() {
                 onClick={() => {
                   setIsDeleted(false);
                   setIsVip(false);
+                  setIsType(undefined);
                 }}
                 className="cursor-pointer"
               >
