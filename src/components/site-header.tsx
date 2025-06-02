@@ -1,11 +1,11 @@
-import { SidebarIcon } from "lucide-react";
+import { AlertCircle, SidebarIcon } from "lucide-react";
 
-import { SearchForm } from "@/components/search-form";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useSidebar } from "@/components/ui/sidebar";
 import logo from "@/assets/logo.svg";
+import { Alert, AlertDescription } from "./ui/alert";
 
 export function SiteHeader() {
   const { toggleSidebar } = useSidebar();
@@ -30,7 +30,14 @@ export function SiteHeader() {
           />
           <p className="font-robotoMono text-xl font-semibold">N1Track</p>
         </Breadcrumb>
-        <SearchForm className="w-full sm:ml-auto sm:w-auto" />
+        <div className="w-full sm:ml-auto sm:w-auto">
+          <Alert variant="default">
+            <AlertCircle />
+            <AlertDescription>
+              STF Digital com lentidão. Link: 223908
+            </AlertDescription>
+          </Alert>
+        </div>
       </div>
     </header>
   );
