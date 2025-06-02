@@ -7,25 +7,25 @@ interface BedgeType {
 export default function Bedge({ type, status, vip }: BedgeType) {
   const badgeStyles = {
     CHAMADO: {
-      open: "border-indigo-500 bg-indigo-500/30 text-indigo-200",
+      open: "border-indigo-500 bg-indigo-500/30 dark:text-indigo-200 text-indigo-700",
       closed: "border-zinc-500 bg-zinc-500/30 text-zinc-300",
       dotOpen: "bg-indigo-400",
       dotClosed: "bg-zinc-400",
     },
     REITERACAO: {
-      open: "border-amber-500 bg-amber-500/30 text-amber-200",
+      open: "border-amber-500 bg-amber-500/30 dark:text-amber-200 text-amber-700",
       closed: "border-zinc-500 bg-zinc-500/30 text-zinc-300",
       dotOpen: "bg-amber-400",
       dotClosed: "bg-zinc-400",
     },
     TRANSFERENCIA: {
-      open: "border-green-500 bg-green-500/30 text-green-200",
+      open: "border-green-500 bg-green-500/30 dark:text-green-200 text-green-700",
       closed: "border-zinc-500 bg-zinc-500/30 text-zinc-300",
       dotOpen: "bg-green-400",
       dotClosed: "bg-zinc-400",
     },
     QUEDA: {
-      open: "border-rose-500 bg-rose-500/30 text-rose-200",
+      open: "border-rose-500 bg-rose-500/30 dark:text-rose-200 text-rose-700",
       closed: "border-zinc-500 bg-zinc-500/30 text-zinc-300",
       dotOpen: "bg-rose-400",
       dotClosed: "bg-zinc-400",

@@ -1,6 +1,7 @@
 import { createCalledApi } from "@/api/create-called-api";
 import { formatTextApi } from "@/api/format-text-api";
 import { Combobox } from "@/components/combobox";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -21,7 +22,7 @@ import { usePersistedForm } from "@/hooks/set-value-form-local-storage";
 import { queryClient } from "@/lib/query-cleint";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import { Brain, Crown } from "lucide-react";
+import { AlertCircleIcon, Brain, Crown } from "lucide-react";
 
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
@@ -58,6 +59,7 @@ interface FormatEmailResponse {
 }
 
 export function CalledForm() {
+  const [critico, setCritico] = useState<boolean>(true);
   const [area, setArea] = useState("");
   const [cargo, setCargo] = useState("");
   const [vip, setVip] = useState(false);
@@ -335,10 +337,20 @@ export function CalledForm() {
             ></Controller>
           </div>
         </div>
-        <div className="flex w-full justify-start">
+        <div className="flex w-full justify-start gap-3">
           <Button disabled={isPending} className="cursor-pointer" type="submit">
             {isPending ? "Aguarde..." : "Registrar"}
           </Button>
+          {critico && (
+            <div>
+              <Alert className="border-rose-500">
+                <AlertCircleIcon />
+                <AlertDescription>
+                  STF Digital com lentidão. Link: 2332123
+                </AlertDescription>
+              </Alert>
+            </div>
+          )}
         </div>
       </form>
     </>
