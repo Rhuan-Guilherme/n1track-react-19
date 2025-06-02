@@ -61,6 +61,9 @@ export function ReiterationForm() {
     mutationFn: createReiterationApi,
     async onSuccess() {
       await queryClient.invalidateQueries({ queryKey: ["tickets"] });
+      await queryClient.invalidateQueries({
+        queryKey: ["performace"],
+      });
     },
   });
 

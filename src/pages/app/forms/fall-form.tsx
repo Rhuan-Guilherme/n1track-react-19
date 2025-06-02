@@ -31,6 +31,9 @@ export function FallForm() {
     mutationFn: createFallApi,
     async onSuccess() {
       await queryClient.invalidateQueries({ queryKey: ["tickets"] });
+      await queryClient.invalidateQueries({
+        queryKey: ["performace"],
+      });
     },
   });
 

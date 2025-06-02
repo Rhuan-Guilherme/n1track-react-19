@@ -88,7 +88,12 @@ export function CalledForm() {
     mutationFn: createCalledApi,
 
     async onSuccess() {
-      await queryClient.invalidateQueries({ queryKey: ["tickets"] });
+      await queryClient.invalidateQueries({
+        queryKey: ["tickets"],
+      });
+      await queryClient.invalidateQueries({
+        queryKey: ["performace"],
+      });
     },
   });
 

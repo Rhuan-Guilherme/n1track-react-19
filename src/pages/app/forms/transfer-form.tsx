@@ -35,6 +35,9 @@ export function TransferForm() {
     mutationFn: createTransferApi,
     async onSuccess() {
       await queryClient.invalidateQueries({ queryKey: ["tickets"] });
+      await queryClient.invalidateQueries({
+        queryKey: ["performace"],
+      });
     },
   });
 
