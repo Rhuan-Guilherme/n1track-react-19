@@ -33,7 +33,7 @@ export function BindsDropDownContent() {
 
   const { data: binds } = useQuery({
     queryKey: ["binds"],
-    queryFn: getBindsApi,
+    queryFn: () => getBindsApi(""),
   });
 
   const { mutateAsync: createBindslFn } = useMutation({
@@ -96,7 +96,7 @@ export function BindsDropDownContent() {
             className="max-h-90 overflow-y-auto rounded-md border"
             style={{
               scrollbarWidth: "thin",
-              scrollbarColor: "#71717a #000000", // thumb cinza, track preta
+              scrollbarColor: "#71717a #000000",
             }}
           >
             <Table>
@@ -114,7 +114,9 @@ export function BindsDropDownContent() {
                       <TableCell className="font-medium">
                         {bind.title}
                       </TableCell>
-                      <TableCell>{bind.description}</TableCell>
+                      <TableCell className="max-w-[200px] truncate">
+                        {bind.description}
+                      </TableCell>
                       <TableCell className="text-right">
                         <Button
                           onClick={() => deleteBindlFn(bind.id)}

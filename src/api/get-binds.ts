@@ -8,8 +8,8 @@ interface GetCriticalResponse {
   }[];
 }
 
-export async function getBindsApi() {
-  const response = await api.get("/binds");
+export async function getBindsApi(query?: string) {
+  const response = await api.get(`/binds${query ? `?query=${query}` : ""}`);
 
   return response.data as GetCriticalResponse;
 }

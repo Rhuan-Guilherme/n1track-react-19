@@ -2,6 +2,7 @@ import { createCalledApi } from "@/api/create-called-api";
 import { formatTextApi } from "@/api/format-text-api";
 import { getCriticalApi } from "@/api/get-critical";
 import { Combobox } from "@/components/combobox";
+import { ComboboxInfos } from "@/components/comboboxInfos";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -49,6 +50,12 @@ interface User {
   vip: boolean;
 }
 
+interface Binds {
+  id: string;
+  title: string;
+  description: string;
+}
+
 type formType = z.infer<typeof formSchema>;
 
 interface FormatEmailBody {
@@ -67,6 +74,7 @@ export function CalledForm() {
   const [vip, setVip] = useState(false);
   const { clearFormStorage, handleChange } = usePersistedForm("n1track");
   const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
+  const [isInputFocusedInfo, setIsInputFocusedInfo] = useState<boolean>(false);
   const { register, handleSubmit, control, watch, setValue, reset } =
     useForm<formType>({
       resolver: zodResolver(formSchema),
@@ -104,9 +112,12 @@ export function CalledForm() {
 
   useEffect(() => {
     if (critico && critical) {
-      setValue("informacao", critical?.description);
-    } else {
-      setValue("informacao", "");
+      setValue("informacao", critical.description);
+    } else if (!critico) {
+      setValue(
+        "informacao",
+        localStorage.getItem("@n1track-form-informacao") || "",
+      );
     }
   }, [critical, critico, setValue]);
 
@@ -141,6 +152,16 @@ export function CalledForm() {
 
     handleChange(loginEvent);
     handleChange(nomeEvent);
+  };
+
+  const handleSelectInfos = (bind: Binds) => {
+    setValue("informacao", bind.description);
+
+    const infoEvent = {
+      target: { name: "informacao", value: bind.description },
+    } as React.FocusEvent<HTMLInputElement>;
+
+    handleChange(infoEvent);
   };
 
   const { isPending: pedingFormat, mutateAsync: formatTextApiFn } = useMutation(
@@ -259,9 +280,27 @@ export function CalledForm() {
             <Input
               {...register("informacao")}
               type="text"
+              autoComplete="off"
+              className="border-accent-foreground/15 bg-zinc-100 dark:bg-zinc-950"
+              onFocus={() => setIsInputFocusedInfo(true)}
               onInputCapture={handleChange}
-              className="border-accent-foreground/15 bg-zinc-100 pr-10 dark:bg-zinc-950"
+              onInput={(e) => {
+                const target = e.target as HTMLInputElement;
+                if (target.value.length < 2) {
+                  setArea("");
+                  setCargo("");
+                  setVip(false);
+                }
+              }}
+              onBlur={() => setIsInputFocusedInfo(false)}
             />
+            {infoWatched && infoWatched.length > 2 && (
+              <ComboboxInfos
+                onSelect={handleSelectInfos}
+                searchValue={infoWatched.toLocaleLowerCase()}
+                isInputFocused={isInputFocusedInfo}
+              />
+            )}
           </div>
 
           <TooltipProvider>
