@@ -1,4 +1,4 @@
-import { Cpu, Home, LayoutList, User2 } from "lucide-react";
+import { Cpu, Home, LayoutList } from "lucide-react";
 
 import {
   SidebarGroup,
@@ -28,15 +28,6 @@ export function NavMain() {
             <Link to="/">
               <LayoutList />
               <span>Listas de chamados</span>
-            </Link>
-          </SidebarMenuButton>
-        </SidebarMenuItem>
-
-        <SidebarMenuItem>
-          <SidebarMenuButton asChild tooltip="Menu">
-            <Link to="/user">
-              <User2 />
-              <span>Controle de usuários</span>
             </Link>
           </SidebarMenuButton>
         </SidebarMenuItem>
