@@ -10,6 +10,7 @@ import { TransferForm } from "./pages/app/forms/transfer-form";
 import { ReiterationForm } from "./pages/app/forms/reiteration-form";
 import { FormatEmail } from "./pages/app/IA/forrmat-email";
 import { User } from "./pages/app/users/user";
+import { Metrics } from "./pages/app/metrics/metrics";
 
 export const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ export const router = createBrowserRouter([
       {
         path: "/users",
         element: <User />,
+      },
+      {
+        path: "/metrics",
+        element: <Metrics />,
       },
     ],
   },

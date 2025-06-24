@@ -1,4 +1,4 @@
-import { Cpu, Home, LayoutList } from "lucide-react";
+import { ChartLine, Cpu, Home, LayoutList } from "lucide-react";
 
 import {
   SidebarGroup,
@@ -19,6 +19,15 @@ export function NavMain() {
             <Link to="/">
               <Home />
               <span>Home</span>
+            </Link>
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+
+        <SidebarMenuItem>
+          <SidebarMenuButton asChild tooltip="Menu">
+            <Link to="/metrics">
+              <ChartLine />
+              <span>Métricas</span>
             </Link>
           </SidebarMenuButton>
         </SidebarMenuItem>
