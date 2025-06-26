@@ -18,7 +18,7 @@ interface createStfUserRequest {
 
 export function CreateStfUser() {
   const [vip, setVip] = useState<boolean>(false);
-  const { register, handleSubmit } = useForm<createStfUserRequest>();
+  const { register, handleSubmit, setValue } = useForm<createStfUserRequest>();
 
   const { mutateAsync: createStfUserFn } = useMutation({
     mutationFn: createStfUser,
@@ -33,6 +33,11 @@ export function CreateStfUser() {
         name: body.name,
         vip,
       });
+
+      setValue("area", "");
+      setValue("cargo", "");
+      setValue("login", "");
+      setValue("name", "");
 
       toast.success("Usuário adicionado com sucesso!");
     } catch (error) {

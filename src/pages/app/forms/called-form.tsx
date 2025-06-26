@@ -298,7 +298,7 @@ export function CalledForm() {
               onInputCapture={handleChange}
               onInput={(e) => {
                 const target = e.target as HTMLInputElement;
-                if (target.value.length < 2) {
+                if (target.value.length > 2) {
                   setArea("");
                   setCargo("");
                   setVip(false);

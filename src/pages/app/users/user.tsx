@@ -113,6 +113,7 @@ export function User() {
 
   return (
     <div className="px-4 py-8">
+      <title>N1Track | Controle de usuários</title>
       <Card className="mx-auto max-w-4xl">
         <CardHeader>
           <CardTitle>Gerenciamento de Usuários</CardTitle>

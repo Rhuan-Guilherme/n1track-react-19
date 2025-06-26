@@ -87,6 +87,7 @@ export function Metrics() {
 
   return (
     <div className="px-4 py-4 md:px-10 lg:px-20">
+      <title>N1Track | Métricas</title>
       <div className="flex flex-col gap-6 lg:flex-row">
         <div className="flex flex-col gap-6 lg:basis-1/2">
           <div className="w-full">
