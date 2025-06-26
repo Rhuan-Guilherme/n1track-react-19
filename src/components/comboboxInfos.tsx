@@ -76,7 +76,7 @@ export function ComboboxInfos({
 
   return (
     <>
-      {open && (
+      {open && (isLoading || bind.length > 0) && (
         <div
           ref={comboboxRef}
           className="border-border bg-popover text-popover-foreground absolute top-17 z-50 max-h-60 w-full overflow-hidden overflow-y-auto rounded-md border p-1 shadow-md"
@@ -95,11 +95,7 @@ export function ComboboxInfos({
                 {bind.title}
               </button>
             ))
-          ) : (
-            <p className="text-muted-foreground p-2 text-center text-sm">
-              nenhum resultado encontrado.
-            </p>
-          )}
+          ) : null}
         </div>
       )}
     </>
