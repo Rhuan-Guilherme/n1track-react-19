@@ -5,11 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "tsc && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "server:start": "node server.js",
-    "postbuild": "npm install && npm run build"
+    "server:start": "node server.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^4.1.2",
