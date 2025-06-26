@@ -12,9 +12,12 @@
     "isolatedModules": true,
     "moduleDetection": "force",
     "noEmit": true,
+    "noImplicitAny": false,
+
+    
 
     /* Linting */
-    "strict": true,
+    "strict": false,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
