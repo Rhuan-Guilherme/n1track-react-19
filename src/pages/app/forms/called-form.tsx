@@ -3,8 +3,10 @@ import { formatTextApi } from "@/api/format-text-api";
 import { getCriticalApi } from "@/api/get-critical";
 import { Combobox } from "@/components/combobox";
 import { ComboboxInfos } from "@/components/comboboxInfos";
+import { CreateStfUser } from "@/components/dropdown/create-new-stf-user.content";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
+import { Dialog } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -24,8 +26,9 @@ import {
 import { usePersistedForm } from "@/hooks/set-value-form-local-storage";
 import { queryClient } from "@/lib/query-cleint";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { DialogTrigger } from "@radix-ui/react-dialog";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { AlertCircleIcon, Brain, Crown } from "lucide-react";
+import { AlertCircleIcon, Brain, Crown, Plus } from "lucide-react";
 
 import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
@@ -250,6 +253,15 @@ export function CalledForm() {
                 isInputFocused={isInputFocused}
               />
             )}
+
+            <div>
+              <Dialog>
+                <DialogTrigger className="absolute top-[31px] right-2 cursor-pointer text-zinc-400 dark:text-zinc-600">
+                  <Plus />
+                </DialogTrigger>
+                <CreateStfUser />
+              </Dialog>
+            </div>
           </div>
         </div>
         <div className="flex w-full gap-3">
