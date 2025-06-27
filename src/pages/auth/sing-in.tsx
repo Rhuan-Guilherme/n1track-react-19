@@ -49,6 +49,7 @@ export function SingIn() {
 
   return (
     <div className="animate-slideIn font-roboto bg-muted space-y-15 rounded-2xl p-10 lg:rounded-none lg:border-none lg:bg-transparent">
+      <title>Login</title>
       <div className="flex flex-col gap-2">
         <h1 className="font-poppins text-4xl lg:text-6xl lg:leading-15">
           Entre em <br /> sua conta.
