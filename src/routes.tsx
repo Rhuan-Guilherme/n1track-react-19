@@ -11,6 +11,8 @@ import { ReiterationForm } from "./pages/app/forms/reiteration-form";
 import { FormatEmail } from "./pages/app/IA/forrmat-email";
 import { User } from "./pages/app/users/user";
 import { Metrics } from "./pages/app/metrics/metrics";
+import { ForgotPassword } from "./pages/auth/forgout-password";
+import { ResetPassword } from "./pages/auth/reset-password";
 
 export const router = createBrowserRouter([
   {
@@ -47,6 +49,8 @@ export const router = createBrowserRouter([
     children: [
       { path: "/sing-in", element: <SingIn /> },
       { path: "/sing-up", element: <SingUp /> },
+      { path: "/forgout", element: <ForgotPassword /> },
+      { path: "/reset", element: <ResetPassword /> },
     ],
   },
 ]);

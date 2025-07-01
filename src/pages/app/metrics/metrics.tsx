@@ -38,8 +38,6 @@ export function Metrics() {
     queryFn: getAllTicketMetrics,
   });
 
-  console.log(dataMetrics);
-
   const chartData =
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     data?.map((user: any) => ({
