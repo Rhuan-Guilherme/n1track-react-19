@@ -13,6 +13,7 @@ import { User } from "./pages/app/users/user";
 import { Metrics } from "./pages/app/metrics/metrics";
 import { ForgotPassword } from "./pages/auth/forgout-password";
 import { ResetPassword } from "./pages/auth/reset-password";
+import { ManagementPage } from "./pages/app/management/management-page";
 
 export const router = createBrowserRouter([
   {
@@ -40,6 +41,10 @@ export const router = createBrowserRouter([
       {
         path: "/metrics",
         element: <Metrics />,
+      },
+      {
+        path: "/management",
+        element: <ManagementPage />,
       },
     ],
   },
