@@ -25,7 +25,7 @@ export default function DescriptionCard({ ticket, id }: GetTicketResponse) {
       {ticket.type === "CHAMADO" && (
         <>
           <p>
-            Prezados, Sr(a). {ticket.name.split(" ")[0]} entrou em contato{" "}
+            Prezados(a), Sr(a). {ticket.name.split(" ")[0]} entrou em contato{" "}
             {ticket.informacao}
           </p>
           <p>Nome: {ticket.name}</p>
