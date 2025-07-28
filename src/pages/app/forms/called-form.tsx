@@ -17,6 +17,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Tooltip,
   TooltipContent,
@@ -42,6 +43,7 @@ const formSchema = z.object({
   patrimono: z.string(),
   informacao: z.string(),
   local: z.string(),
+  resolution: z.string(),
 });
 
 interface User {
@@ -340,7 +342,6 @@ export function CalledForm() {
             </Tooltip>
           </TooltipProvider>
         </div>
-
         <div className="flex w-full gap-3">
           <div className="flex w-full flex-col gap-3">
             <Label>Local</Label>
@@ -409,6 +410,16 @@ export function CalledForm() {
                 );
               }}
             ></Controller>
+          </div>
+        </div>
+
+        <div className="flex w-full gap-3">
+          <div className="flex w-full flex-col gap-3">
+            <Label>Resolução do chamado: (opcional)</Label>
+            <Textarea
+              {...register("resolution")}
+              className="border-accent-foreground/15 bg-zinc-100 dark:bg-zinc-950"
+            />
           </div>
         </div>
         <div className="flex w-full justify-start gap-3">

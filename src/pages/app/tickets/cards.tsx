@@ -130,6 +130,12 @@ export default function CardsComponent({ ticket }: GetTicketResponse) {
         <DescriptionCard id={`desc-${ticket.id}`} ticket={ticket} />
         <div className="bg-border mt-3 h-0.5 w-full"></div>
       </CardContent>
+      {ticket.type === "CHAMADO" && (
+        <div className="mx-3 flex flex-col gap-2 text-sm leading-6">
+          <p>Resolução: foi realizado a tal do seuka</p>
+        </div>
+      )}
+
       {ticket.status === "ABERTO" && ticket.isDeleted === false && (
         <CardFooter className="flex items-center justify-center gap-2">
           <Dialog open={isOpenModal} onOpenChange={setIsOpenModal}>
